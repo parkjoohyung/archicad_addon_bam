@@ -50,13 +50,6 @@ It solves repetitive tasks such as Excel integration, area-based reshaping, and 
 - **Apply Labeling**: 선택된 요소들에 규칙에 따른 라벨을 순차적으로 적용합니다.  
   **Apply Labeling**: Sequentially applies labels to selected elements based on the rules.
 
-### 5. Polygon Point Reduction (폴리라인 최적화)
-- **Simplify Poly**: 폴리라인의 불필요한 정점을 줄여 데이터 가독성을 높이고 파일 크기를 최적화합니다.  
-  **Simplify Poly**: Reduces unnecessary vertices of polylines to improve data readability and optimize file size.
-- **Tol(mm)**: 단순화 강도를 조절합니다.  
-  **Tol(mm)**: Adjust the simplification intensity.
-- **Preserve Curvature**: 체크 시 곡선 구간의 형태를 최대한 보존하며 단순화합니다.  
-  **Preserve Curvature**: When checked, simplifies while preserving the shape of curved sections as much as possible.
 
 ### 6. 3D Resolution Helper (3D 해상도 도우미)
 - **기능**: 3D 창의 해상도를 특정 값이나 비율로 조정합니다.  
@@ -65,6 +58,23 @@ It solves repetitive tasks such as Excel integration, area-based reshaping, and 
   **Lock Ratio**: Changes resolution while maintaining the aspect ratio.
 - **Match Drawing**: 도면 영역 크기에 맞춰 3D 창 크기를 동기화합니다.  
   **Match Drawing**: Synchronizes the 3D window size with the drawing area size.
+
+### 6. Ground Plane Generator (지표면 생성기)
+- **기능**: 선택된 여러 모프(Morph) 요소의 가중평균 높이를 계산하여, 대지를 덮는 넓은 지표면 모프를 자동 생성합니다.  
+  **Function**: Calculates the weighted average height of selected Morph elements and automatically generates a large ground plane Morph.
+
+---
+
+## 📅 업데이트 이력 (Release Notes)
+
+### v1.0.1 (2026-06-04)
+- **Magic Wand 생성 오류 완벽 수정**: Zone 및 Mesh 생성 시 `nSubPolys` 파라미터가 0으로 복사되어 발생하던 `APIERR_BADPARS (-2130313111)` 오류 해결. 이제 폴리라인 소스를 바탕으로 한 번에 면 기반 요소 생성이 정상적으로 작동합니다. (Fixed polygon parameter bug during Magic Wand creation)
+- **Terrain 패널 UI 간소화**: 사용자 피드백을 반영하여 Terrain 패널 하단의 'Polygon Point Reduction' 관련 옵션을 제거하여 패널을 직관적으로 개선했습니다. (Removed Simplify Poly UI from Terrain Palette)
+- **멀티 버전 대응**: ArchiCAD 27 및 29 환경 모두에서 동일한 기능을 사용할 수 있도록 코드를 최적화하고 배포 스크립트를 통합했습니다.
+
+### v1.0.0 (2026-05-06)
+- **Ground Plane Generator 안정성 강화**: 층 정보 참조 시 발생하던 메모리 크래시 완전 해결 (Fixed story data memory crash)
+- **자동 층 상속 및 1.0m 오프셋**: 새 지표면이 원본 영역을 완전히 덮을 수 있도록 자동 확장 기능 추가
 
 ---
 
