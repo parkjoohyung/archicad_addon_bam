@@ -1,7 +1,7 @@
 # ac_bam (ArchiCAD BIM Automation Module)
 
-**ac_bam**은 ArchiCAD 사용자의 생산성을 극대화하기 위해 설계된 프리미엄 자동화 도구 모음입니다.  
-**ac_bam** is a premium automation toolkit designed to maximize the productivity of ArchiCAD users.
+**ac_bam**은 ArchiCAD 사용자의 생산성을 높이기 위해 설계된 자동화 도구 모음입니다.  
+**ac_bam** is an automation toolkit designed to improve the productivity of ArchiCAD users.
 
 엑셀 연동, 면적 기반 형상 변경, 배치 라벨링 등 반복적인 작업을 단 몇 번의 클릭으로 해결합니다.  
 It solves repetitive tasks such as Excel integration, area-based reshaping, and batch labeling with just a few clicks.
@@ -70,8 +70,8 @@ It solves repetitive tasks such as Excel integration, area-based reshaping, and 
 ---
 
 ## 📄 라이선스 및 지원 (License & Support)
-본 애드온은 프리미엄 도구로 제공됩니다. 라이선스 키 발급을 원하시면 아래 메일 주소로 연락해 주시기 바랍니다.  
-This add-on is provided as a premium tool. If you wish to obtain a license key, please contact us at the email address below.
+본 애드온을 사용하려면 라이선스 키가 필요합니다. 발급을 원하시면 아래 메일 주소로 연락해 주시기 바랍니다.  
+This add-on requires a license key. To obtain a key, please contact us at the email address below.
 
 - **Email**: [p.juhyung@daum.net](mailto:p.juhyung@daum.net)
 - **문의 내용**: 라이선스 키 요청 및 기술 지원  
