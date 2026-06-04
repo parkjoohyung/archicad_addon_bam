@@ -755,18 +755,77 @@ private:
                     }
                 }
             }
-            GSErrCode err = ACAPI_Element_Create(&el, &memo);
-            if (err == NoError) {
-                if (ps.originalGuid != APINULLGuid) {
-                    ACAPI_Element_Delete({ps.originalGuid});
+            if (el.header.type == API_ZoneID || el.header.type == API_MeshID) {
+                API_RegularizedPoly regPoly = {};
+                regPoly.coords = memo.coords;
+                regPoly.pends = memo.pends;
+                regPoly.parcs = memo.parcs;
+                regPoly.needVertexAncestry = false;
+                
+                Int32 nResult = 0;
+                API_RegularizedPoly** polys = nullptr;
+                GSErrCode regErr = ACAPI_Polygon_RegularizePolygon(&regPoly, &nResult, &polys);
+                
+                if (regErr == NoError && nResult > 0) {
+                    for (Int32 i = 0; i < nResult; ++i) {
+                        API_Element newEl = el;
+                        API_ElementMemo newMemo = {};
+                        
+                        if (newEl.header.type == API_ZoneID) {
+                            newEl.zone.poly.nCoords = BMhGetSize((GSHandle)(*polys)[i].coords) / sizeof(API_Coord) - 1;
+                            newEl.zone.poly.nSubPolys = BMhGetSize((GSHandle)(*polys)[i].pends) / sizeof(Int32) - 1;
+                            newEl.zone.poly.nArcs = BMhGetSize((GSHandle)(*polys)[i].parcs) / sizeof(API_PolyArc);
+                            newEl.zone.manual = true;
+                        } else if (newEl.header.type == API_MeshID) {
+                            newEl.mesh.poly.nCoords = BMhGetSize((GSHandle)(*polys)[i].coords) / sizeof(API_Coord) - 1;
+                            newEl.mesh.poly.nSubPolys = BMhGetSize((GSHandle)(*polys)[i].pends) / sizeof(Int32) - 1;
+                            newEl.mesh.poly.nArcs = BMhGetSize((GSHandle)(*polys)[i].parcs) / sizeof(API_PolyArc);
+                        }
+                        
+                        newMemo.coords = (*polys)[i].coords;
+                        newMemo.pends = (*polys)[i].pends;
+                        newMemo.parcs = (*polys)[i].parcs;
+                        
+                        if (newEl.header.type == API_MeshID) {
+                            newMemo.meshPolyZ = (double**)BMAllocateHandle((newEl.mesh.poly.nCoords + 1) * sizeof(double), ALLOCATE_CLEAR, 0);
+                        }
+                        
+                        GSErrCode createErr = ACAPI_Element_Create(&newEl, &newMemo);
+                        if (createErr == NoError) {
+                            if (ps.originalGuid != APINULLGuid) {
+                                ACAPI_Element_Delete({ps.originalGuid});
+                            }
+                        } else {
+                            ACAPI_WriteReport(GS::UniString::Printf("Error creating polygon element: %d", createErr), true);
+                        }
+                        
+                        if (newMemo.meshPolyZ) BMKillHandle((GSHandle*)&newMemo.meshPolyZ);
+                    }
+                    for (Int32 j = 0; j < nResult; ++j) {
+                        ACAPI_Polygon_DisposeRegularizedPoly(&(*polys)[j]);
+                    }
+                    BMKillHandle((GSHandle*)&polys);
+                } else {
+                    ACAPI_WriteReport(GS::UniString::Printf("Error regularizing polygon: %d", regErr), true);
                 }
             } else {
-                ACAPI_WriteReport(GS::UniString::Printf("Error creating element: %d", err), true);
+                GSErrCode err = ACAPI_Element_Create(&el, &memo);
+                if (err == NoError) {
+                    if (ps.originalGuid != APINULLGuid) {
+                        ACAPI_Element_Delete({ps.originalGuid});
+                    }
+                } else {
+                    ACAPI_WriteReport(GS::UniString::Printf("Error creating element: %d", err), true);
+                }
             }
+            
             if (el.header.type != API_MorphID) {
                 if (memo.coords == ps.memo.coords) memo.coords = nullptr;
                 if (memo.pends == ps.memo.pends) memo.pends = nullptr;
                 if (memo.parcs == ps.memo.parcs) memo.parcs = nullptr;
+                if (memo.coords) BMKillHandle((GSHandle*)&memo.coords);
+                if (memo.pends) BMKillHandle((GSHandle*)&memo.pends);
+                if (memo.meshPolyZ) BMKillHandle((GSHandle*)&memo.meshPolyZ);
             }
             ACAPI_DisposeElemMemoHdls(&memo);
             return NoError;
