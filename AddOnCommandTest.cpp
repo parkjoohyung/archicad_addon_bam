@@ -768,14 +768,33 @@ private:
                 
                 if (regErr == NoError && nResult > 0) {
                     for (Int32 i = 0; i < nResult; ++i) {
-                        API_Element newEl = el;
+                        API_Element newEl = {};
+                        newEl.header.type = el.header.type;
                         API_ElementMemo newMemo = {};
+                        ACAPI_Element_GetDefaults(&newEl, &newMemo);
+                        
+                        if (newMemo.coords) BMKillHandle((GSHandle*)&newMemo.coords);
+                        if (newMemo.pends) BMKillHandle((GSHandle*)&newMemo.pends);
+                        if (newMemo.parcs) BMKillHandle((GSHandle*)&newMemo.parcs);
+                        if (newMemo.meshPolyZ) BMKillHandle((GSHandle*)&newMemo.meshPolyZ);
                         
                         if (newEl.header.type == API_ZoneID) {
                             newEl.zone.poly.nCoords = BMhGetSize((GSHandle)(*polys)[i].coords) / sizeof(API_Coord) - 1;
                             newEl.zone.poly.nSubPolys = BMhGetSize((GSHandle)(*polys)[i].pends) / sizeof(Int32) - 1;
                             newEl.zone.poly.nArcs = BMhGetSize((GSHandle)(*polys)[i].parcs) / sizeof(API_PolyArc);
                             newEl.zone.manual = true;
+                            
+                            double xmin = 1e15, xmax = -1e15, ymin = 1e15, ymax = -1e15;
+                            for (Int32 k = 1; k <= newEl.zone.poly.nCoords; ++k) {
+                                double vx = (*(*polys)[i].coords)[k].x;
+                                double vy = (*(*polys)[i].coords)[k].y;
+                                if (vx < xmin) xmin = vx; if (vx > xmax) xmax = vx;
+                                if (vy < ymin) ymin = vy; if (vy > ymax) ymax = vy;
+                            }
+                            double cx = (xmin + xmax) / 2.0;
+                            double cy = (ymin + ymax) / 2.0;
+                            newEl.zone.pos = { cx, cy };
+                            newEl.zone.refPos = { cx, cy };
                         } else if (newEl.header.type == API_MeshID) {
                             newEl.mesh.poly.nCoords = BMhGetSize((GSHandle)(*polys)[i].coords) / sizeof(API_Coord) - 1;
                             newEl.mesh.poly.nSubPolys = BMhGetSize((GSHandle)(*polys)[i].pends) / sizeof(Int32) - 1;
@@ -791,15 +810,16 @@ private:
                         }
                         
                         GSErrCode createErr = ACAPI_Element_Create(&newEl, &newMemo);
-                        if (createErr == NoError) {
-                            if (ps.originalGuid != APINULLGuid) {
-                                ACAPI_Element_Delete({ps.originalGuid});
-                            }
-                        } else {
+                        if (createErr != NoError) {
                             ACAPI_WriteReport(GS::UniString::Printf("Error creating polygon element: %d", createErr), true);
                         }
                         
-                        if (newMemo.meshPolyZ) BMKillHandle((GSHandle*)&newMemo.meshPolyZ);
+                        if (newEl.header.type != API_MorphID) {
+                            newMemo.coords = nullptr;
+                            newMemo.pends = nullptr;
+                            newMemo.parcs = nullptr;
+                        }
+                        ACAPI_DisposeElemMemoHdls(&newMemo);
                     }
                     for (Int32 j = 0; j < nResult; ++j) {
                         ACAPI_Polygon_DisposeRegularizedPoly(&(*polys)[j]);
@@ -810,11 +830,7 @@ private:
                 }
             } else {
                 GSErrCode err = ACAPI_Element_Create(&el, &memo);
-                if (err == NoError) {
-                    if (ps.originalGuid != APINULLGuid) {
-                        ACAPI_Element_Delete({ps.originalGuid});
-                    }
-                } else {
+                if (err != NoError) {
                     ACAPI_WriteReport(GS::UniString::Printf("Error creating element: %d", err), true);
                 }
             }
