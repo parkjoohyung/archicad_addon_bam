@@ -26,10 +26,12 @@ using PolyIdx = UInt32;
 #include <string>
 #include <map>
 #include <cmath>
+#ifdef WINDOWS
 #include <wininet.h>
 #include <shellapi.h>
 #pragma comment(lib, "wininet.lib")
 #pragma comment(lib, "shell32.lib")
+#endif
 
 #include <vector>
 #include <algorithm>
