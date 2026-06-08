@@ -55,7 +55,7 @@ void CheckForUpdates(bool manual) {
             bool isNewer = (lMaj > cMaj) || (lMaj == cMaj && lMin > cMin) || (lMaj == cMaj && lMin == cMin && lPat > cPat);
 
             if (isNewer) {
-                GS::UniString title = "Update Notification";
+                GS::UniString title ("Update Notification");
                 GS::UniString msg = GS::UniString::Printf("A new update is available!\n\nLatest version: %s\nCurrent version: %s\n\nWould you like to go to the download page now?", 
                                                           latestVersion.ToCStr().Get(), currentVersion.ToCStr().Get());
                 
@@ -65,8 +65,8 @@ void CheckForUpdates(bool manual) {
                     ShellExecuteA(NULL, "open", RELEASES_URL, NULL, NULL, SW_SHOWNORMAL);
                 }
             } else if (manual) {
-                GS::UniString title = "Update Notification";
-                GS::UniString msg = "You are using the latest version.";
+                GS::UniString title ("Update Notification");
+                GS::UniString msg ("You are using the latest version.");
                 const WCHAR* pMsg = (const WCHAR*)msg.ToUStr().Get();
                 const WCHAR* pTitle = (const WCHAR*)title.ToUStr().Get();
                 ::MessageBoxW(nullptr, pMsg, pTitle, MB_OK | MB_ICONINFORMATION | MB_TOPMOST);
@@ -76,7 +76,7 @@ void CheckForUpdates(bool manual) {
     InternetCloseHandle(hInternet);
 #else
     if (manual) {
-        ACAPI_WriteReport("You are using the latest version.", true);
+        ACAPI_WriteReport(GS::UniString ("You are using the latest version."), true);
     }
 #endif
 }
