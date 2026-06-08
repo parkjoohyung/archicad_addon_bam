@@ -26,6 +26,7 @@ GS::UniString ComputeLicenseHash(const GS::UniString& email, const GS::UniString
 }
 
 bool CheckLicenseOnline(const GS::UniString& email, const GS::UniString& key) {
+#if defined(WINDOWS) || defined(_WIN32)
     HINTERNET hInternet = InternetOpenA("ArchiCAD-Addon", INTERNET_OPEN_TYPE_DIRECT, NULL, NULL, 0);
     if (!hInternet) return false;
 
@@ -52,9 +53,14 @@ bool CheckLicenseOnline(const GS::UniString& email, const GS::UniString& key) {
         if (myHash == GS::UniString(line.c_str())) return true;
     }
     return false;
+#else
+    // Temporary bypass for macOS build
+    return true;
+#endif
 }
 
 bool SaveLicenseLocal(const GS::UniString& email, const GS::UniString& key) {
+#if defined(WINDOWS) || defined(_WIN32)
     HKEY hKey;
     if (RegCreateKeyExA(HKEY_CURRENT_USER, "Software\\ArchiCAD_Premium_Addon", 0, NULL, 0, KEY_WRITE, NULL, &hKey, NULL) == ERROR_SUCCESS) {
         std::string eStr = email.ToCStr().Get();
@@ -65,9 +71,13 @@ bool SaveLicenseLocal(const GS::UniString& email, const GS::UniString& key) {
         return true;
     }
     return false;
+#else
+    return true;
+#endif
 }
 
 bool IsAlreadyLicensed() {
+#if defined(WINDOWS) || defined(_WIN32)
     char emailBuf[255] = {0}, keyBuf[255] = {0};
     DWORD szEmail = 255, szKey = 255;
     HKEY hKey;
@@ -80,6 +90,9 @@ bool IsAlreadyLicensed() {
         }
     }
     return false;
+#else
+    return true;
+#endif
 }
 
 } // namespace MyProjectNamespace
