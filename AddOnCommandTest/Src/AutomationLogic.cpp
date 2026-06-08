@@ -164,6 +164,7 @@ namespace AddOnLogic {
                     ACAPI_DisposeElemMemoHdls(&newMemo);
                 }
             } // Close for (auto &n : sel)
+            ACAPI_WriteReport(GS::UniString::Printf("Simplified %d polylines.", updatedCount), false);
             return NoError;
         });
     }
@@ -623,7 +624,7 @@ namespace AddOnLogic {
                             if (el.header.type == API_TextID) multiStyle = el.text.multiStyle;
                             else multiStyle = el.label.u.text.multiStyle;
 
-#ifdef ServerMainVers_2900
+#if defined(ARCHICAD_VERSION_28) || defined(ARCHICAD_VERSION_29)
                             if (memo.textContent != nullptr) delete memo.textContent;
                             memo.textContent = new GS::UniString(newID);
 #else
@@ -665,7 +666,8 @@ namespace AddOnLogic {
                             changedEl.header.guid = el.header.guid;
                             ACAPI_ELEMENT_MASK_CLEAR(mask);
                             ACAPI_ELEMENT_MASK_SET(mask, API_ZoneType, roomNoStr);
-                            const GS::uchar_t* src = (const GS::uchar_t*)newID.ToUStr();
+                            auto ustrBuf = newID.ToUStr();
+                            const GS::uchar_t* src = (const GS::uchar_t*)ustrBuf.Get();
                             size_t cLen = GS::ucslen(src);
                             if (cLen > 31) cLen = 31;
                             memcpy(changedEl.zone.roomNoStr, src, cLen * sizeof(GS::uchar_t));

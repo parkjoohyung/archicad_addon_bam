@@ -13,8 +13,10 @@
 namespace MyProjectNamespace {
 
 static const char* CURRENT_VERSION = "v1.0.1";
+#if defined(WINDOWS) || defined(_WIN32)
 static const char* VERSION_URL = "https://raw.githubusercontent.com/parkjoohyung/archicad_addon_bam/main/version.txt";
 static const char* RELEASES_URL = "https://github.com/parkjoohyung/archicad_addon_bam/releases/latest";
+#endif
 
 void CheckForUpdates(bool manual) {
 #if defined(WINDOWS) || defined(_WIN32)
