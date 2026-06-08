@@ -30,6 +30,10 @@ jobs:
           curl -L -o sdks/sdk_29.zip "https://github.com/GRAPHISOFT/archicad-api-devkit/releases/download/29.3100/API.Development.Kit.MAC.29.3100.zip"
           unzip -q sdks/sdk_29.zip -d sdks/sdk_29
 
+          echo "Making OSX tools executable..."
+          chmod -R +x sdks/sdk_28/Support/Tools/OSX || true
+          chmod -R +x sdks/sdk_29/Support/Tools/OSX || true
+
       - name: Build ArchiCAD 28 (macOS)
         run: |
           cd AddOnCommandTest
