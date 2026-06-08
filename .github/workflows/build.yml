@@ -7,7 +7,7 @@ on:
 
 jobs:
   build-macos:
-    name: Build for macOS (AC27 & AC29)
+    name: Build for macOS (AC28 & AC29)
     runs-on: macos-latest
     steps:
       - name: Checkout Repository
