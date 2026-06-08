@@ -1,0 +1,213 @@
+'STR#' 32000 "Add-on Name and Description" {
+/* [  1] */             "ac_bam"
+/* [  2] */             "ac_bam Premium Tool"
+}
+
+'STR#' 32500 "Menu 1" {
+/* [  1] */             "ac_bam"
+/* [  2] */             "ac_bam Main Palette...^ES^EE^EI^ED^EW^E3^EL"
+}
+
+'STR#' 32501 "Menu 2" {
+/* [  1] */             "ac_bam"
+/* [  2] */             "3D Resolution Helper...^ES^EE^EI^ED^EW^E3^EL"
+}
+
+'STR#' 32502 "Menu 3" {
+/* [  1] */             "ac_bam"
+/* [  2] */             "Average Height Calculator...^ES^EE^EI^ED^EW^E3^EL"
+}
+
+'STR#' 32503 "Menu 4" {
+/* [  1] */             "ac_bam"
+/* [  2] */             "Terrain...^ES^EE^EI^ED^EW^E3^EL"
+}
+
+'GDLG'  32500  Palette | topCaption | close          40   40  480  870  "ac_bam v1.0.1" {
+/* [  1] */ Button              320  60  140  32   LargePlain  "Auto Create"
+/* [  2] */ Button              320  26  140  32   LargePlain  "Browse..."
+/* [  3] */ LeftText             15  10  450  22   LargeBold   "Excel to Zone"
+/* [  4] */ LeftText             15  35  290  22   LargePlain  "Select an Excel file..."
+/* [  5] */ Separator            15  100  450  2
+/* [  6] */ LeftText             15  108  450  22   LargeBold   "Calculate Area"
+/* [  7] */ LeftText             15  345  450  22   LargeBold   "Polygon point reduction (Grouping: OFF)"
+/* [  8] */ LeftText             15  145  160  22   LargePlain  "Target Area (m2):"
+/* [  9] */ RealEdit            185  143  100  28   LargePlain  "0.0" "99999.0"
+/* [ 10] */ LeftText            300  145   50  22   LargePlain  "Unit:"
+/* [ 11] */ RealEdit            350  143  110  28   LargePlain  "0.0" "100.0"
+/* [ 12] */ LeftText             15  180  100  22   LargePlain  "Tolerance (%):"
+/* [ 13] */ RealEdit            115  178   60  28   LargePlain  "0.0" "100.0"
+/* [ 14] */ CheckBox             15  225  180  24   LargePlain  "Fix Width (X)"
+/* [ 15] */ CheckBox            210  225  180  24   LargePlain  "Fix Height (Y)"
+/* [ 16] */ Button               15  255  220  36   LargePlain  "Reshape Zone"
+/* [ 17] */ Button               15  300  160  32   LargePlain  "Sum Selected"
+/* [ 18] */ LeftText            185  305  100  22   LargePlain  "Total Area:"
+/* [ 19] */ LeftText            290  305  175  22   LargePlain  "0.00"
+/* [ 20] */ Separator            15  445  450  2
+/* [ 21] */ LeftText             15  455  450  22   LargeBold   "Magic Wand Creation"
+/* [ 22] */ RadioButton          15  485   70  24   LargePlain  1  "Zone"
+/* [ 23] */ RadioButton          90  485   75  24   LargePlain  1  "Mesh"
+/* [ 24] */ Button              385  483   85  32   LargePlain  "Create"
+/* [ 25] */ RadioButton         175  485   80  24   LargePlain  1  "Morph"
+/* [ 26] */ Separator            15  540  450  2
+/* [ 27] */ LeftText             15  550  450  22   LargeBold   "Labeling"
+/* [ 28] */ LeftText             15  580  140  22   LargePlain  "Prefix:"
+/* [ 29] */ TextEdit             15  605  350  28   LargePlain  255
+/* [ 30] */ Button              385  603   85  32   LargePlain  "Pick"
+/* [ 31] */ LeftText             15  645  100  22   LargePlain  "Style:"
+/* [ 32] */ PopupControl        120  643  200  28                0 0
+/* [ 33] */ LeftText            335  645   50  22   LargePlain  "Start:"
+/* [ 34] */ TextEdit            395  643   75  28   LargePlain  255
+/* [ 35] */ LeftText             15  680  450  22   LargePlain  "Preview:"
+/* [ 36] */ MultiLineEdit        15  705  450  50   LargePlain  NoScroll
+/* [ 37] */ Button               15  765  450  32   LargePlain  "Apply Labeling"
+/* [ 38] */ Button              180  178   60  28   LargePlain  "Calc"
+/* [ 39] */ Separator            15  335  450  2
+/* [ 40] */ LeftText            265  487   55  22   LargePlain  "H(mm):"
+/* [ 41] */ RealEdit            320  484   60  28   LargePlain  "0.0" "99999.0"
+/* [ 42] */ LeftText            245  180  220  22   LargePlain  "-"
+/* [ 43] */ Button               15  405  450  32   LargePlain  "Simplify Poly (Reduce Nodes)"
+/* [ 44] */ LeftText             15  375   70  22   LargePlain  "Tol(mm):"
+/* [ 45] */ RealEdit             85  372   60  28   LargePlain  "1.0" "9999.0"
+/* [ 46] */ CheckBox            160  375  300  22   LargePlain  "Preserve Curvature"
+/* [ 47] */ Button               15  805  140  28   LargePlain  "Check Update"
+/* [ 48] */ LeftText            350  805  120  28   LargePlain  "v1.0.1"
+}
+
+'DLGH'  32500  DLG_32500 {
+1       ""              Help1
+2       ""              Help2
+3       ""              Help3
+4       ""              Help4
+5       ""              Help5
+6       ""              Help6
+7       ""              Help7
+8       ""              Help8
+9       ""              Help9
+10      ""              Help10
+11      ""              Help11
+12      ""              Help12
+13      ""              Help13
+14      ""              Help14
+15      ""              Help15
+16      ""              Help16
+17      ""              Help17
+18      ""              Help18
+19      ""              Help19
+20      ""              Help20
+21      ""              Help21
+22      ""              Help22
+23      ""              Help23
+24      ""              Help24
+25      ""              Help25
+26      ""              Help26
+27      ""              Help27
+28      ""              Help28
+29      ""              Help29
+30      ""              Help30
+31      ""              Help31
+32      ""              Help32
+33      ""              Help33
+34      ""              Help34
+35      ""              Help35
+36      ""              Help36
+37      ""              Help37
+38      ""              Help38
+39      ""              Help39
+40      ""              Help40
+41      ""              Help41
+42      ""              Help42
+43      ""              Help43
+44      ""              Help44
+45      ""              Help45
+46      ""              Help46
+47      ""              Help47
+48      ""              Help48
+}
+
+'GDLG'  32501  Palette | topCaption | close          40   40  240  360  "3D Resolution Helper" {
+/* [  1] */ LeftText            10   10   220  20   LargeBold   "Target Resolution (px)"
+/* [  2] */ LeftText            10   40   60   20   LargePlain  "Width"
+/* [  3] */ RealEdit            80   38   140  22   LargePlain  "0" "9999"
+/* [  4] */ LeftText            10   70   60   20   LargePlain  "Height"
+/* [  5] */ RealEdit            80   68   140  22   LargePlain  "0" "9999"
+/* [  6] */ CheckBox            80   100  140  22   LargePlain  "Lock Aspect Ratio"
+/* [  7] */ Button              10   135  220  32   LargePlain  "Match Selected Drawing"
+/* [  8] */ LeftText            10   180  220  20   LargeBold   "Upscale Framing"
+/* [  9] */ Button              10   205  65   30   LargePlain  "0.5x"
+/* [ 10] */ Button              85   205  65   30   LargePlain  "2.0x"
+/* [ 11] */ Button              160  205  65   30   LargePlain  "4.0x"
+/* [ 12] */ Button              10   245  220  32   LargePlain  "Apply Target Size"
+/* [ 13] */ Button              10   285  220  32   LargePlain  "Restore Original Size"
+/* [ 14] */ LeftText            10   325  220  20   LargePlain  "Note: Framing at small size."
+}
+
+'DLGH'  32501  DLG_32501 {
+1       ""              Help1
+2       ""              Help2
+3       ""              Help3
+4       ""              Help4
+5       ""              Help5
+6       ""              Help6
+7       ""              Help7
+8       ""              Help8
+9       ""              Help9
+10      ""              Help10
+11      ""              Help11
+12      ""              Help12
+13      ""              Help13
+14      ""              Help14
+}
+
+/* Weighted Height Calculator Palette */
+'GDLG' 32502 Palette | topCaption | close  200  200  220  260 "Weighted Height Calc" {
+/* [ 1] */ Button          10   10   180  25  LargePlain  "Select Mesh/Morph"
+/* [ 2] */ Separator       10   45   180  2
+/* [ 3] */ LeftText        10   55   80   20  SmallPlain  "Base Elev:"
+/* [ 4] */ LeftText        100  55   90   20  SmallPlain  "0.00 m"
+/* [ 5] */ Button          10   80   180  25  LargePlain  "Calculate"
+/* [ 6] */ Separator       10   115  180  2
+/* [ 7] */ LeftText        10   125  80   20  SmallPlain  "Area:"
+/* [ 8] */ LeftText        100  125  90   20  SmallPlain  "0.00 m2"
+/* [ 9] */ LeftText        10   150  80   20  SmallPlain  "Perimeter:"
+/* [10] */ LeftText        100  150  90   20  SmallPlain  "0.00 m"
+/* [11] */ LeftText        10   175  80   20  SmallPlain  "Average Height:"
+/* [12] */ LeftText        10   195  180  20  SmallPlain  "0.00 + 0.00 = 0.00 m"
+/* [13] */ Button          10   225  180  25  LargePlain  "Create Ground Plane"
+}
+
+'DLGH' 32502  DLG_32502 {
+1       ""              Help1
+2       ""              Help2
+3       ""              Help3
+4       ""              Help4
+5       ""              Help5
+6       ""              Help6
+7       ""              Help7
+8       ""              Help8
+9       ""              Help9
+10      ""              Help10
+11      ""              Help11
+12      ""              Help12
+13      ""              Help13
+}
+
+/* Terrain Palette */
+'GDLG' 32503 Palette | topCaption | close  200  200  240  135 "Terrain" {
+/* [ 1] */ LeftText        10   15   100  20  LargePlain  "Divisions:"
+/* [ 2] */ RealEdit        120  12   110  24  LargePlain  "2.0" "100.0"
+/* [ 3] */ LeftText        10   45   100  20  LargePlain  "Pen (1~255):"
+/* [ 4] */ RealEdit        120  42   110  24  LargePlain  "1.0" "255.0"
+/* [ 5] */ Button          10   80   220  40  LargePlain  "Generate Contours"
+}
+
+'DLGH' 32503  DLG_32503 {
+1       ""              Help1
+2       ""              Help2
+3       ""              Help3
+4       ""              Help4
+5       ""              Help5
+}
+
+
+

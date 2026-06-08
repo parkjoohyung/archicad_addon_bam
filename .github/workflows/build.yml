@@ -1,0 +1,109 @@
+name: Build ArchiCAD Add-ons (macOS & Windows)
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build-macos:
+    name: Build for macOS (AC27 & AC29)
+    runs-on: macos-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Download & Extract ArchiCAD Mac SDKs
+        run: |
+          mkdir -p sdks
+          
+          echo "Downloading ArchiCAD 27 Mac SDK..."
+          curl -L -o sdks/sdk_27.zip "https://github.com/parkjoohyung/archicad_addon_bam/releases/download/sdks/API_Development_Kit_27_Mac.zip"
+          unzip -q sdks/sdk_27.zip -d sdks/sdk_27
+          
+          echo "Downloading ArchiCAD 29 Mac SDK..."
+          curl -L -o sdks/sdk_29.zip "https://github.com/parkjoohyung/archicad_addon_bam/releases/download/sdks/API_Development_Kit_29_Mac.zip"
+          unzip -q sdks/sdk_29.zip -d sdks/sdk_29
+
+      - name: Build ArchiCAD 27 (macOS)
+        run: |
+          cd AddOnCommandTest
+          mkdir Build
+          cd Build
+          cmake .. -G Xcode -DAC_API_DEVKIT_DIR="../../sdks/sdk_27"
+          cmake --build . --config Release
+
+      - name: Build ArchiCAD 29 (macOS)
+        run: |
+          cd AddOnCommandTest_29
+          mkdir Build
+          cd Build
+          cmake .. -G Xcode -DAC_API_DEVKIT_DIR="../../sdks/sdk_29"
+          cmake --build . --config Release
+
+      - name: Upload macOS Bundles
+        uses: actions/upload-artifact@v3
+        with:
+          name: macos-binaries
+          path: |
+            AddOnCommandTest/Build/Release/*.bundle
+            AddOnCommandTest_29/Build/Release/*.bundle
+
+  build-windows:
+    name: Build for Windows (AC27 & AC29)
+    runs-on: windows-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@v1.1
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Download & Extract ArchiCAD Windows SDKs
+        shell: powershell
+        run: |
+          New-Item -ItemType Directory -Force -Path sdks
+          
+          echo "Downloading ArchiCAD 27 Windows SDK..."
+          Invoke-WebRequest -Uri "https://github.com/parkjoohyung/archicad_addon_bam/releases/download/sdks/API_Development_Kit_27_Win.zip" -OutFile sdks/sdk_27.zip
+          Expand-Archive -Path sdks/sdk_27.zip -DestinationPath sdks/sdk_27 -Force
+          
+          echo "Downloading ArchiCAD 29 Windows SDK..."
+          Invoke-WebRequest -Uri "https://github.com/parkjoohyung/archicad_addon_bam/releases/download/sdks/API_Development_Kit_29_Win.zip" -OutFile sdks/sdk_29.zip
+          Expand-Archive -Path sdks/sdk_29.zip -DestinationPath sdks/sdk_29 -Force
+
+      - name: Build ArchiCAD 27 (Windows)
+        shell: powershell
+        run: |
+          cd AddOnCommandTest
+          mkdir Build
+          cd Build
+          cmake .. -G "Visual Studio 17 2022" -A x64 -DAC_API_DEVKIT_DIR="../../sdks/sdk_27"
+          msbuild ac_bam.sln /p:Configuration=Release /p:Platform=x64
+
+      - name: Build ArchiCAD 29 (Windows)
+        shell: powershell
+        run: |
+          cd AddOnCommandTest_29
+          mkdir Build
+          cd Build
+          cmake .. -G "Visual Studio 17 2022" -A x64 -DAC_API_DEVKIT_DIR="../../sdks/sdk_29"
+          msbuild ac_bam.sln /p:Configuration=Release /p:Platform=x64
+
+      - name: Upload Windows APX Binaries
+        uses: actions/upload-artifact@v3
+        with:
+          name: windows-binaries
+          path: |
+            AddOnCommandTest/Build/Release/*.apx
+            AddOnCommandTest_29/Build/Release/*.apx

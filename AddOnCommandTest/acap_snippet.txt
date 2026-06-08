@@ -1,0 +1,500 @@
+﻿*/
+__APIEXPORT GSErrCode	__ACENV_CALL	ACAPI_LibraryPart_RegisterESYM	(GSType			signature,				// LibPart owner ID
+																		 API_LibTypeID	typeID,					// LibPart base type (Window, Door, Object, Lamp)
+																		 short			stringResID);			// description
+
+
+/** @brief Registers a property handler.
+	@ingroup Property
+	@ingroup AddOnIntegration
+	@param assignStrResID [in] The string resource ID, which will be used in Archicad's dialogs.
+	@return
+		- NoError - The function has completed with success.
+	@remarks This function should be called from the RegisterInterface routine in your add-on.
+	@par Example
+		@snippet API_Examples.cpp ACAPI_Property_RegisterPropertyObjectHandler-Example-Snippet
+*/
+__APIEXPORT GSErrCode	__ACENV_CALL	ACAPI_Property_RegisterPropertyObjectHandler (short assignStrResID);
+
+
+/** @brief Registers built-in library parts to be loaded.
+	@ingroup AddOnIntegration
+	@return
+		- NoError - The function has completed with success.
+	@remarks This function notifies the host application that your add-on has library parts compiled into the add-on as 'FILE' resources. The application will add the add-on module to the active libraries and the library parts will be available as read only objects.
+		You can retrieve the unique ID of a built-in library part with the @ref ACAPI_LibraryPart_GetBuiltInLibpartUnId goodie function.
+	@par Example
+		@snippet API_Examples.cpp ACAPI_AddOnIntegration_RegisterBuiltInLibrary-Example-Snippet
+*/
+__APIEXPORT GSErrCode	__ACENV_CALL	ACAPI_AddOnIntegration_RegisterBuiltInLibrary (void);
+
+
+/** @brief Registers the add-on to be called for merging and converting its moduldata.
+	@ingroup AddOnIntegration
+	@return
+		- NoError - The function has completed with success.
+	@remarks Call this function from RegisterInterface to let Archicad know that the add-on has @ref APIModulDataMergeHandlerProc and/or @ref APIModulDataSaveOldFormatHandlerProc callback function implemented for merging and converting its modules. In order this functions to be called on the adequate event, the add-on needs to pass the function pointers to Archicad from Initialize with @ref ACAPI_AddOnIntegration_InstallModulDataMergeHandler and @ref ACAPI_AddOnIntegration_InstallModulDataSaveOldFormatHandler, respectively.
+*/
+__APIEXPORT GSErrCode	__ACENV_CALL	ACAPI_AddOnIntegration_RegisterModulDataHandler (void);
+
+
+/** @brief Tells Archicad that your add-on wants to modify classification visibility.
+	@ingroup AddOnIntegration
+	@return
+		- NoError - The function has completed with success.
+	@remarks This function should be called from the RegisterInterface routine in your add-on.
+	@par Example
+		@snippet API_Examples.cpp ACAPI_AddOnIntegration_RegisterClassificationVisibilityHandler-Example-Snippet
+*/
+__APIEXPORT GSErrCode	__ACENV_CALL	ACAPI_AddOnIntegration_RegisterClassificationVisibilityHandler (void);
+
+
+/** @brief Tells Archicad that your add-on wants to modify property visibility.
+	@ingroup Property
+	@ingroup AddOnIntegration
+	@return
+		- NoError - The function has completed with success.
+	@remarks This function should be called from the RegisterInterface routine in your add-on.
+	@par Example
+		@snippet API_Examples.cpp ACAPI_Property_RegisterPropertyVisibilityHandler-Example-Snippet
+*/
+__APIEXPORT GSErrCode	__ACENV_CALL	ACAPI_Property_RegisterPropertyVisibilityHandler (void);
+
+
+/** @brief Registers the add-on to be called for merging and converting its custom data stored in AddOnObjects.
+	@ingroup AddOnObject
+	@return
+		- NoError - The function has completed with success.
+	@remarks Call this function from RegisterInterface to let Archicad know that the add-on has APIAddOnObjectMergeHandlerProc and/or APIAddOnObjectSaveOldFormatHandlerProc and/or APIAddOnObjectConvertNewFormatHandlerProc callback function implemented for merging and converting its custom data. In order this functions to be called on the adequate event, the add-on needs to pass the function pointers to Archicad from Initialize with @ref ACAPI_AddOnObject_InstallAddOnObjectMergeHandler, @ref ACAPI_AddOnObject_InstallAddOnObjectSaveOldFormatHandler and @ref ACAPI_AddOnObject_InstallAddOnObjectConvertNewFormatHandler, respectively.
+*/
+__APIEXPORT GSErrCode	__ACENV_CALL	ACAPI_AddOnObject_RegisterAddOnObjectHandler (void);
+
+
+/** @brief Registers the add-on to be called when Navigator AddOn viewpoints are merged, saved to older format, or converted from older format to current format.
+	@ingroup AddOnIntegration
+	@return
+		- NoError - The function has completed with success.
+	@remarks Call this function from RegisterInterface to let Archicad know that the AddOn has @ref APINavigatorAddOnViewPointDataMergeHandlerProc, @ref APINavigatorAddOnViewPointDataSaveOldFormatHandlerProc or @ref APINavigatorAddOnViewPointDataConvertNewFormatHandlerProc callback function implemented for merging and converting its Navigator AddOn viewpoint data.
+		In order these functions to be called on the adequate event, the AddOn needs to pass the function pointers to @ref ACAPI_AddOnIntegration_InstallNavigatorAddOnViewPointDataMergeHandler, @ref ACAPI_AddOnIntegration_InstallNavigatorAddOnViewPointDataSaveOldFormatHandler and @ref ACAPI_AddOnIntegration_InstallNavigatorAddOnViewPointDataConvertNewFormatHandler respectively. Call these install functions in the AddOn's Initialize function.
+*/
+__APIEXPORT GSErrCode	__ACENV_CALL	ACAPI_AddOnIntegration_RegisterNavigatorAddOnViewPointDataHandler (void);
+
+
+/** @brief Create an observer to an element settings dialog.
+	@ingroup AddOnIntegration
+	@since Archicad 26
+	@param tool [in] The element type that identifies the settings dialog
+	@return
+		- APIERR_BADPARS - The passed element type is invalid.
+		- APIERR_BADID - The passed tool does not identify a valid toolbox item (including invisible tools).
+		- NoError - The function has completed with success.
+	@remarks This function creates an observer for an element settings dialog specified by tool. In order to get settings dialog create or destroy events you must install the settings handler callback functions with @ref ACAPI_AddOnIntegration_InstallSettingsHandler.
+		This function should be called from your add-on's @ref RegisterInterface routine. You can register more than one observers from the same add-on for different settings dialogs.
+		From version 26 the tool and variation parameters were merged into a single @c API_ElemType parameter.
+	@par Example
+		@snippet API_Examples.cpp ACAPI_AddOnIntegration_RegisterSettingsObserver-Example-Snippet
+*/
+__APIEXPORT GSErrCode	__ACENV_CALL	ACAPI_AddOnIntegration_RegisterSettingsObserver (const API_ElemType& tool);
+
+
+/** @brief Registers an attribute manager format which can be used in attribute manager import.
+	@ingroup AddOnIntegration
+	@since Archicad 26
+	@param formatData [in] Stores parameters of the new attribute manager import format.
+	@return
+		- NoError - The function has completed with success.
+	@remarks For further informations read the documentation of @ref API_AttributeManagerFormat structure.
+	@par Example
+		@snippet API_Examples.cpp ACAPI_AddOnIntegration_RegisterAttributeImportFormat-Example-Snippet
+*/
+__APIEXPORT GSErrCode	__ACENV_CALL	ACAPI_AddOnIntegration_RegisterAttributeImportFormat (const API_AttributeManagerFormat& formatData);
+
+
+/** @brief Registers a publish format which can be used in publisher tree.
+	@ingroup AddOnIntegration
+	@param formatData [in] Stores parameters of the new publish format
+	@return
+		- NoError - The function has completed with success.
+	@remarks For further informations read the documentation of @ref API_PublishFormatData structure.
+	@par Example
+		@snippet API_Examples.cpp ACAPI_AddOnIntegration_RegisterPublishFormat-Example-Snippet
+*/
+__APIEXPORT GSErrCode	__ACENV_CALL	ACAPI_AddOnIntegration_RegisterPublishFormat (const API_PublishFormatData& formatData);
+
+
+
+/** @brief Installs a callback for handling command calls from other add-ons.
+	@ingroup AddOnIntegration
+	@param cmdID [in] An identifier of the command to install the callback procedure for. This should be the same what you used in the @ref ACAPI_AddOnAddOnCommunication_RegisterSupportedService as the command identifier in the RegisterInterface function.
+	@param cmdVersion [in] An identifier of the command to install the callback procedure for. This should be the same what you used in the @ref ACAPI_AddOnAddOnCommunication_RegisterSupportedService as the command version number in the RegisterInterface function.
+	@param handlerProc [in] The callback function to handle the command calls.
+	@return
+		- NoError - The function has completed with success.
+	@remarks This function should be called in the Initialize function of your add-on. It installs the callback function which is called when the other add-ons would like to use the supported services of your add-on.
+	@par Example
+		@snippet API_Examples.cpp ACAPI_AddOnIntegration_InstallModulCommandHandler-Example-Snippet
+*/	// Initialize
+__APIEXPORT GSErrCode	__ACENV_CALL	ACAPI_AddOnIntegration_InstallModulCommandHandler  (GSType					cmdID,
+																							Int32					cmdVersion,
+																							APIModulCommandProc*	handlerProc);
+
+
+/** @brief Installs a callback procedure for handling the add-on's menu commands.
+	@ingroup MenuItem
+	@ingroup AddOnIntegration
+	@param menuStrResID [in] An identifier of the menu to install the callback procedure for. This should be the same what you used in the @ref ACAPI_MenuItem_RegisterMenu as a menu string resource number in the RegisterInterface function.
+	@param handlerProc [in] The callback function to handle the menu commands.
+	@return
+		- NoError - The function has completed with success.
+	@remarks This function should be called in the Initialize function of your add-on. It installs the callback function which is called when the user chooses one of your menu commands.
+	@par Example
+		@snippet API_Examples.cpp ACAPI_MenuItem_InstallMenuHandler-Example-Snippet
+*/
+__APIEXPORT GSErrCode	__ACENV_CALL	ACAPI_MenuItem_InstallMenuHandler  (short					menuStrResID,
+																			APIMenuCommandProc*		handlerProc);
+
+
+/** @brief Installs a callback procedure for handling file operations.
+	@ingroup AddOnIntegration
+	@param cmdID [in] An identifier of the file type to install the callback procedure for. This should be the same what you used in the @ref ACAPI_AddOnIntegration_RegisterFileType as a reference number in the RegisterInterface function.
+	@param handlerProc [in] The callback function to handle the different file operations.
+	@return
+		- NoError - The function has completed with success.
+	@remarks This function should be called in the Initialize function of your add-on. It installs the callback function which is called when the user chooses your registered file format in one of the Open/Save/Merge dialogs.
+	@par Example
+		@snippet API_Examples.cpp ACAPI_AddOnIntegration_InstallFileTypeHandler-Example-Snippet
+*/
+__APIEXPORT GSErrCode	__ACENV_CALL	ACAPI_AddOnIntegration_InstallFileTypeHandler  (GSType					cmdID,
+																						APIIOCommandProc*		handlerProc);
+
+
+/** @brief Installs a callback procedure for handling file operations.
+	@ingroup AddOnIntegration
+	@param cmdID [in] An identifier of the file type to install the callback procedure for. This should be the same what you used in the @ref ACAPI_AddOnIntegration_RegisterFileType as a reference number in the RegisterInterface function.
+	@param handlerProc [in] The callback function to handle the different file operations.
+	@return
+		- NoError - The function has completed with success.
+	@remarks This function should be called in the Initialize function of your add-on. It installs the callback function which is called when the user chooses your registered file format in one of the Open/Save dialogs.
+	@par Example
+		@snippet API_Examples.cpp ACAPI_AddOnIntegration_InstallFileTypeHandler3D-Example-Snippet
+*/
+__APIEXPORT GSErrCode	__ACENV_CALL	ACAPI_AddOnIntegration_InstallFileTypeHandler3D	   (GSType					cmdID,
+																							APIIO3DCommandProc*		handlerProc);
+
+
+/** @brief Installs the creation and destroy handlers for the registered custom settings panel.
+	@ingroup AddOnIntegration
+	@param refCon [in] Panel reference number
+	@param handlerCreateProc [in] Callback function, called when the panel is created.
+	@param handlerDestroyProc [in] Callback function, called when the panel is destroyed.
+	@return
+		- APIERR_REFUSEDPAR - There is no panel registered with refcon by the add-on.
+		- NoError - The function has completed with success.
+	@remarks This function installs the callback functions for handling create/delete events of the dialog panel registered by @ref ACAPI_AddOnIntegration_RegisterSettingsPanel, @ref ACAPI_AddOnIntegration_RegisterInfoBoxPanel or @ref ACAPI_AddOnIntegration_RegisterAttributePanel.
+		The @ref ACAPI_AddOnIntegration_InstallPanelHandler function should be called from Initialize.
+		The 'create' handler is called when the panel is created. The handler must create the tabpage and the observer. The 'destroy' handler is called when the panel is destroyed. The handler must destroy the tabpage and the observer.
+		For more details refer to the general description of Custom Panels in Settings Dialogs.
+	@par Example
+		@snippet API_Examples.cpp ACAPI_AddOnIntegration_InstallPanelHandler-Example-Snippet
+*/
+__APIEXPORT GSErrCode	__ACENV_CALL	ACAPI_AddOnIntegration_InstallPanelHandler (Int32					refCon,
+																					APIPanelCreateProc*		handlerCreateProc,
+																					APIPanelDestroyProc*	handlerDestroyProc);
+
+
+/** @brief Installs the Add-On command handler object.
+	@ingroup AddOnAddOnCommunication
+	@param addOnCommand [in] The Add-On command handler object. After the @c ACAPI_AddOnAddOnCommunication_InstallAddOnCommandHandler is called, the ownership is passed and the object can not be used.
+	@return
+		- APIERR_REFUSEDPAR - The addOnCommand parameter is nullptr.
+		- APIERR_BADNAME - There is already an @ref API_AddOnCommand installed with the same name for this Add-On.
+		- APIERR_BADPARS - The input, output or schema definitions is not in a valid JSON format.
+		- NoError - The function has completed with success.
+	@remarks This function installs a handler object for the corresponding HTTP requests. The handler object is identified by the Add-On MDID and its name.
+		The @c ACAPI_AddOnAddOnCommunication_InstallAddOnCommandHandler function should be called from Initialize.
+		After a successful @c ACAPI_AddOnAddOnCommunication_InstallAddOnCommandHandler function call, the Add-On stays in the memory.
+	@par Example
+		@snippet API_Examples.cpp ACAPI_AddOnAddOnCommunication_InstallAddOnCommandHandler-Example-Snippet
+*/
+__APIEXPORT GSErrCode	__ACENV_CALL	ACAPI_AddOnAddOnCommunication_InstallAddOnCommandHandler (GS::Owner<API_AddOnCommand> addOnCommand);
+
+
+/** @brief Installs a callback for handling external symbols.
+	@ingroup LibraryPart
+	@ingroup AddOnIntegration
+	@param signature [in] A four-character identifier of the external symbol.
+	@param handlerProc [in] The callback function to handle the creation and the editing of the external symbol.
+	@return
+		- NoError - The function has completed with success.
+	@remarks This function should be called in the Initialize function of your add-on.
+	@par Example
+		@snippet API_Examples.cpp ACAPI_LibraryPart_InstallESYMHandler-Example-Snippet
+*/
+__APIEXPORT GSErrCode	__ACENV_CALL	ACAPI_LibraryPart_InstallESYMHandler (GSType					signature,
+																			  APIESYMCommandProc*		handlerProc);
+
+
+/** @brief Installs the property handler function for the given menu item.
+	@ingroup Property
+	@ingroup AddOnIntegration
+	@param strResID [in] The string resource ID you install the property handler for.
+	@param propertyCommandProc [in] The property command handler function.
+	@return
+		- NoError - The function has completed with success.
+	@remarks The string resource will appear in Archicad's dialogs. This function should be called from the Initialize function of the add-on, after registering the property handler with @ref ACAPI_Property_RegisterPropertyObjectHandler.
+	@par Example
+		@snippet API_Examples.cpp ACAPI_Property_InstallPropertyObjectHandler-Example-Snippet
+*/
+__APIEXPORT GSErrCode	__ACENV_CALL	ACAPI_Property_InstallPropertyObjectHandler	(short					 		strResID,
+																					 APIPropertyObjectCommandProc*  propertyCommandProc);
+
+
+/** @brief Installs a callback procedure for handling the module data merge operations.
+	@ingroup AddOnIntegration
+	@param mergeHandlerProc [in] The callback procedure which will handle the module data merge. Can be nullptr ; this removes the installed callback.
+	@return
+		- NoError - The function has completed with success.
+	@remarks This function should be called in the Initialize function of your add-on to pass the pointer of the APIModulDataMergeHandlerProc callback routine implemented for resolving conflicts between two instances of the same custom data section of the add-on during a merge operation.
+*/
+__APIEXPORT GSErrCode	__ACENV_CALL	ACAPI_AddOnIntegration_InstallModulDataMergeHandler	(APIModulDataMergeHandlerProc* mergeHandlerProc);
+
+
+/** @brief Installs a callback procedure for converting module data into older format.
+	@ingroup AddOnIntegration
+	@param modulDataSaveOldFormatProc [in] The callback procedure to convert module data. Passing nullptr in this parameter uninstalls the previously installed handler function.
+	@return
+		- NoError - The function has completed with success.
+	@remarks This function should be called in the Initialize function of your add-on to pass the pointer of the APIModulDataSaveOldFormatHandlerProc callback routine implemented for converting modules of the add-on into previous format.
+*/
+__APIEXPORT GSErrCode	__ACENV_CALL	ACAPI_AddOnIntegration_InstallModulDataSaveOldFormatHandler (APIModulDataSaveOldFormatHandlerProc* modulDataSaveOldFormatProc);
+
+
+/** @brief Installs a callback procedure for handling the converison of the user data, the addOn attached to an elemeset
+	@ingroup AddOnIntegration
+	@param elemSetSaveOldFormatProc [in] The callback function to handle the backward conversion
+	@return
+		- NoError - The function has completed with success.
+	@remarks The installed callback is called when the plan is saved back to an earlier version of Archicad. You can handle any change in the user data's here, to make it readable for previous version.
+*/
+__APIEXPORT GSErrCode	__ACENV_CALL	ACAPI_AddOnIntegration_InstallElemSetSaveOldFormatHandler (APIElemSetSaveOldFormatHandlerProc* elemSetSaveOldFormatProc);
+
+
+
+/** @brief Installs a callback procedure for handling the AddOnObject merge operations.
+	@ingroup AddOnObject
+	@param mergeHandlerProc [in] The callback procedure which will handle the AddOnObject data merge. Can be nullptr ; this removes the installed callback.
+	@return
+		- NoError - The function has completed with success.
+	@remarks This function should be called in the Initialize function of your add-on to pass the pointer of the APIAddOnObjectMergeHandlerProc callback routine implemented for resolving conflicts between two lists of the AddOnObjects of the add-on during a merge operation.
+*/
+__APIEXPORT GSErrCode	__ACENV_CALL	ACAPI_AddOnObject_InstallAddOnObjectMergeHandler			(APIAddonObjectMergeHandlerProc*				mergeHandlerProc);
+
+
+/** @brief Installs a callback procedure for converting AddOnObject data into older format.
+	@ingroup AddOnObject
+	@param saveOldFormatProc [in] The callback procedure to convert AddOnObject data. Passing nullptr in this parameter uninstalls the previously installed handler function.
+	@return
+		- NoError - The function has completed with success.
+	@remarks In order to save the add-on's AddOnObject data in the proper format into a previous version project file, you need to implement this callback function, and pass it to Archicad with @ref ACAPI_AddOnObject_InstallAddOnObjectSaveOldFormatHandler during the Initialize phase. It is also necessary to notify Archicad about this capability of the add-on by calling @ref ACAPI_AddOnObject_RegisterAddOnObjectHandler from the @ref RegisterInterface function.
+		This handler function is called whenever the user saves the project into an older format, and the add-on has any AddOnObject stored currently into the project. The data should be constructed according to the required version into @ref API_AddonObject structures, and these structures should be pushed into the @c oldFormatAddOnObjectArray array.
+		The memory allocated for the converted AddOnObjects by the add-on's handler function will be released by the caller application.
+		If you need to delete an AddOnObject (e.g. it cannot be read by a previous version) then simply don't push it into the array. Order of the converted @ref API_AddonObject s is irrelevant.
+		You must pay attention to not create more than one @ref API_AddonObject s with the same name if the AddOnObject is Unique.
+		Because Unique AddOnObjects is an API 21 () feature, please pay special attention to converting AddOnObjects with UniqueAddOnObject @ref API_AddonObjectType by either setting their type to GeneralAddOnObject or leaving them from @c oldFormatAddOnObjectArray.
+*/
+__APIEXPORT GSErrCode	__ACENV_CALL	ACAPI_AddOnObject_InstallAddOnObjectSaveOldFormatHandler	(APIAddonObjectSaveOldFormatHandlerProc*		saveOldFormatProc);
+
+
+/** @brief Installs a callback procedure for converting old format AddOnObject data into current format.
+	@ingroup AddOnObject
+	@param convertNewFormatProc [in] The callback procedure to convert AddOnObject data. Passing nullptr in this parameter uninstalls the previously installed handler function.
+	@return
+		- NoError - The function has completed with success.
+	@remarks In order to convert the add-on's AddOnObject data into current format, you need to implement this callback function, and pass it to Archicad with @ref ACAPI_AddOnObject_InstallAddOnObjectConvertNewFormatHandler during the Initialize phase. It is also necessary to notify Archicad about this capability of the add-on by calling @ref ACAPI_AddOnObject_RegisterAddOnObjectHandler from the RegisterInterface function.
+		This handler function is called whenever the user opens an old version project, and the add-on has any AddOnObject stored in the original project. The data should be constructed according to the current version into @c API_AddonObject structures, and these structures should be pushed into the currentFormatAddOnObjectArray array.
+		The memory allocated for the converted AddOnObject by the add-on's handler function will be released by the caller application.
+		You must pay attention to not create more than one @ref API_AddonObject s with the same name if the AddOnObject is Unique.
+*/
+__APIEXPORT GSErrCode	__ACENV_CALL	ACAPI_AddOnObject_InstallAddOnObjectConvertNewFormatHandler (APIAddonObjectConvertNewFormatHandlerProc*	convertNewFormatProc);
+
+
+/** @brief Installs a callback procedure for handling the Navigator AddOn viewpoint merge operations.
+	@ingroup AddOnIntegration
+	@param mergeHandlerProc [in] The callback procedure which will handle the Navigator AddOn viewpoint data merge. If nullptr is passed, an installed callback function is removed.
+	@return
+		- NoError - The function has completed with success.
+	@remarks This function should be called in the Initialize function of your AddOn.
+*/
+__APIEXPORT GSErrCode	__ACENV_CALL	ACAPI_AddOnIntegration_InstallNavigatorAddOnViewPointDataMergeHandler			 (APINavigatorAddOnViewPointDataMergeHandlerProc*				mergeHandlerProc);
+
+
+/** @brief Installs a callback procedure for converting Navigator AddOn viewpoints into older format.
+	@ingroup AddOnIntegration
+	@param saveOldFormatProc [in] The callback procedure which will handle the Navigator AddOn viewpoints' conversion into older format. If nullptr is passed, an installed callback function is removed.
+	@return
+		- NoError - The function has completed with success.
+	@remarks This function should be called in the Initialize function of your AddOn.
+*/
+__APIEXPORT GSErrCode	__ACENV_CALL	ACAPI_AddOnIntegration_InstallNavigatorAddOnViewPointDataSaveOldFormatHandler	 (APINavigatorAddOnViewPointDataSaveOldFormatHandlerProc*		saveOldFormatProc);
+
+
+/** @brief Installs a callback procedure for converting Navigator AddOn viewpoints into current format.
+	@ingroup AddOnIntegration
+	@param convertNewFormatProc [in] The callback procedure which will handle the Navigator AddOn viewpoints' conversion into current format. If nullptr is passed, an installed callback function is removed.
+	@return
+		- NoError - The function has completed with success.
+	@remarks This function should be called in the Initialize function of your AddOn.
+*/
+__APIEXPORT GSErrCode	__ACENV_CALL	ACAPI_AddOnIntegration_InstallNavigatorAddOnViewPointDataConvertNewFormatHandler (APINavigatorAddOnViewPointDataConvertNewFormatHandlerProc*	convertNewFormatProc);
+
+
+/** @brief Installs the create and destroy handlers for the registered settings observer.
+	@ingroup AddOnIntegration
+	@since Archicad 26
+	@param tool [in] The element type that identifies the settings dialog
+	@param handlerCreateProc [in] Callback function, called when the settings dialog is created.
+	@param handlerDestroyProc [in] Callback function, called when the settings dialog is destroyed.
+	@return
+		- APIERR_BADPARS - No settings observer was registered for the settings dialog specified by tool and variaton.
+		- NoError - The function has completed with success.
+	@remarks This function installs the callback functions for handling create/destroy events of the settings dialog observer registered by @ref ACAPI_AddOnIntegration_RegisterSettingsObserver.
+		The @c ACAPI_AddOnIntegration_InstallSettingsHandler function should be called from Initialize.
+		The 'create' handler is called when the settings dialog is created. The 'destroy' handler is called when the settings dialog is destroyed.
+		From version 26 the tool and variation parameters were merged into a single @ref API_ElemType parameter.
+	@par Example
+		@snippet API_Examples.cpp ACAPI_AddOnIntegration_InstallSettingsHandler-Example-Snippet
+*/
+__APIEXPORT GSErrCode	__ACENV_CALL	ACAPI_AddOnIntegration_InstallSettingsHandler (const API_ElemType&			tool,
+																					   APISettingsCreateProc*		handlerCreateProc,
+																					   APISettingsDestroyProc*		handlerDestroyProc);
+
+
+/** @brief Installs the classification visibility handler function.
+	@ingroup AddOnIntegration
+	@param handlerProc [in] The classification visibility handler function.
+	@return
+		- NoError - The function has completed with success.
+	@remarks This function should be called from the Initialize function of the add-on, after registering the classification handler with @ref ACAPI_AddOnIntegration_RegisterClassificationVisibilityHandler.
+	@par Example
+		@snippet API_Examples.cpp ACAPI_AddOnIntegration_InstallClassificationVisibilityHandler-Example-Snippet
+*/
+__APIEXPORT GSErrCode	__ACENV_CALL	ACAPI_AddOnIntegration_InstallClassificationVisibilityHandler (APIClassificationVisibilityHandlerProc* handlerProc);
+
+
+/** @brief Installs the property visibility handler function.
+	@ingroup Property
+	@ingroup AddOnIntegration
+	@param handlerProc [in] The property visibility handler function.
+	@return
+		- NoError - The function has completed with success.
+	@remarks This function should be called from the Initialize function of the add-on, after registering the property handler with @ref ACAPI_Property_RegisterPropertyVisibilityHandler.
+	@par Example
+		@snippet API_Examples.cpp ACAPI_Property_InstallPropertyVisibilityHandler-Example-Snippet
+*/
+__APIEXPORT GSErrCode	__ACENV_CALL	ACAPI_Property_InstallPropertyVisibilityHandler (APIPropertyVisibilityHandlerProc* handlerProc);
+
+
+/** @brief Installs the save methods for the Publisher
+	@ingroup AddOnIntegration
+	@param mimeType The unique mimeType which identifies the new publish format
+	@param saveProc Callback function, called in case of publishing
+	@return
+		- NoError - The function has completed with success.
+	@remarks This function installs the callback functions for the new publish formats. The publisher will call the registered function, during the publishing command.
+	Example Refer to the Format Register Test example project of the API Development Kit.
+*/
+__APIEXPORT GSErrCode	__ACENV_CALL	ACAPI_AddOnIntegration_InstallPublisherSaveMethod (const char* mimeType, SaveProc* saveProc);
+
+
+/** @brief Installs the option methods for the Publisher
+	@ingroup AddOnIntegration
+	@param mimeType The unique mimeType which identifies the new publish format
+	@param saveOptionProc Callback function, called in case of publishing
+	@return
+		- NoError - The function has completed with success.
+	@remarks This function installs the callback functions for the new publish formats. The Add-on can create his own option dialog, the settings are stored in @c API_Userdata structures.
+	Example Refer to the Format Register Test example project of the API Development Kit.
+*/
+__APIEXPORT GSErrCode	__ACENV_CALL	ACAPI_AddOnIntegration_InstallPublisherSaveOption (const char* mimeType, SaveOptionProc* saveOptionProc);
+
+
+/** @brief Installs the translator getter function for the Publisher
+	@ingroup AddOnIntegration
+	@since Archicad 26
+	@param mimeType The unique mimeType which identifies the new publish format
+	@param translatorGetterProc Callback function, called from the Organizer
+	@return
+		- NoError - The function has completed with success.
+	@remarks This function installs the callback functions for the new publish formats. The publisher will call the registered function, during the setup of the formats in the Organizer.
+	Example Refer to the Format Register Test example project of the API Development Kit.
+*/
+__APIEXPORT GSErrCode	__ACENV_CALL	ACAPI_AddOnIntegration_InstallPublisherTranslatorGetter (const char* mimeType, TranslatorGetterProc* translatorGetterProc);
+
+
+/** @brief Installs the default translator getter function for the Publisher
+	@ingroup AddOnIntegration
+	@since Archicad 26
+	@param mimeType The unique mimeType which identifies the new publish format
+	@param defaultTranslatorGetterProc Callback function, called from the Organizer
+	@return
+		- NoError - The function has completed with success.
+	@remarks This function installs the callback functions for the new publish formats. The publisher will call the registered function, during the setup of the formats in the Organizer.
+	Example Refer to the Format Register Test example project of the API Development Kit.
+*/
+__APIEXPORT GSErrCode	__ACENV_CALL	ACAPI_AddOnIntegration_InstallPublisherDefaultTranslatorGetter (const char* mimeType, DefaultTranslatorGetterProc* defaultTranslatorGetterProc);
+
+
+/** @brief Installs the format info getter function for the Publisher
+	@ingroup AddOnIntegration
+	@since Archicad 27
+	@param mimeType The unique mimeType which identifies the new publish format
+	@param infoGetterProc Callback function, called from the Organizer
+	@return
+		- NoError - The function has completed with success.
+	@remarks This function installs the callback functions for the new publish formats. The publisher will call the registered function, during the setup of the formats in the Organizer.
+	Example Refer to the Format Register Test example project of the API Development Kit.
+*/
+__APIEXPORT GSErrCode	__ACENV_CALL	ACAPI_AddOnIntegration_InstallPublisherFormatInfoGetter (const char* mimeType, InfoGetterProc* infoGetterProc);
+
+
+/** @brief Installs the import method for the Attribute Manager
+	@ingroup AddOnIntegration
+	@ingroup Attribute
+	@since Archicad 26
+	@param fileExtension The unique file extension which identifies the new import format.
+	@param importProc Callback function, called when import a file with the registered extension.
+	@return
+		- NoError - The function has completed with success.
+	@remarks This function installs the callback function for the new attribute import format. The Attribute Manager will call the registered function, during the import command.
+	Example Refer to the Attribute Test example project of the API Development Kit.
+*/
+__APIEXPORT GSErrCode	__ACENV_CALL	ACAPI_AddOnIntegration_InstallAttrManagerImportMethod (const GS::UniString& fileExtension, ImportAttrProc* importProc);
+
+
+/** @brief Informs Archicad about the additionally created file during exporting or publishing. Required for handling them with the target file. (E.g. uploading to BIMcloud together.)
+	@ingroup ProjectOperation
+	@param path [in] The path to the created file.
+	@return
+		- NoError - The function has completed with success.
+*/
+__APIEXPORT GSErrCode	__ACENV_CALL	ACAPI_ProjectOperation_AdditionalFileWasCreated (const IO::Location& path);
+
+
+/** @brief Frees the memory occupied by a handle to an array of @ref API_AddParType.
+	@ingroup LibraryPart
+	@param addPars [in] A handle to an array of @ref API_AddParType.
+	@return
+	@remarks This is the recommended way of disposing the parameter description handles for compatibility reasons, as in a later version of the API the @ref API_AddParType structure might change. Also, you might have array-type parameters among the additional parameters; this function also takes care of those.
+*/
+__APIEXPORT GSErrCode	__ACENV_CALL	ACAPI_DisposeAddParHdl (API_AddParType ***addPars);
+
+
+/** @brief Frees the memory occupied by a handle to an array of @ref API_ParagraphType.
+	@ingroup Element
+	@param paragraphs [in] A handle to an array of @ref API_ParagraphType.
+	@return
+	@remarks This is the recommended way of disposing the paragraph handles for compatibility reasons, as in a later version of the API the @ref API_ParagraphType structure might change.
+*/
+__APIEXPORT GSErrCode	__ACENV_CALL	ACAPI_DisposeParagraphsHdl (API_ParagraphType ***paragraphs);
+
+

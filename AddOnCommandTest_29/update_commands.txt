@@ -1,0 +1,18 @@
+﻿
+				<Item command="19993-0x00000000-0x00000000" comment="&amp;Check Background Update Comp
+atibility"/>
+									<Item command="2131230721-0x47732f64-0x08427fea" comment="Update with IFC Model..
+."/>
+									<Item command="2129920002-0x47732f64-0xc094335f" comment="Update Room Accessories
+"/>
+							<Item command="5-0x47246d64-0x5d8b6a85" comment="Generate/Update Live Loads"/>
+									<Item command="2129920002-0x47732f64-0x97849b30" comment="Update Apartment Stamps
+"/>
+									<Item command="2129920003-0x47732f64-0x3da33acc" comment="Update TOP Stamps"/>
+							<Item command="20746-0x00000000-0x00000000" comment="Update Drawing(s)"/>
+							<Item command="7692-0x00000000-0x00000000" comment="Network and Update..."/>
+					<Item command="3335-0x00000000-0x00000000" comment="Check for Updates..."/>
+				<Item command="20746-0x00000000-0x00000000" comment="Update Drawing(s)"/>
+				<Item command="5-0x47246d64-0x5d8b6a85" comment="Generate/Update Live Loads"/>
+
+

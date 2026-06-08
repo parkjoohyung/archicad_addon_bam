@@ -1,0 +1,330 @@
+﻿
+/** @brief Describes the subcategory of an element.
+	@enum API_ElemVariationID
+	@ingroup Element
+	@since Archicad 25
+	@remarks API_ElemVariationID is an extension of typeID (see @ref API_Elem_Head). These are built in subcategories. But if you register an own subtype with @ref ACAPI_LibraryPart_RegisterSubtype function you have to pass at first a four-character identifier the variationID (your signature). This is an arbitrary long value wherewith you can identify your own subtype. It is used only in case of library elems (object, lamp, window, door).
+*/
+typedef enum {
+	APIVarId_Generic				= 0,
+
+	APIVarId_SymbStair				= 'SYST',
+	APIVarId_WallEnd				= 'WAEN',
+	APIVarId_Door					= 'DOOR',
+	APIVarId_Skylight				= 'SKYL',
+	APIVarId_Object					= 'SYMB',
+	APIVarId_GridElement			= 'GREL',
+	APIVarId_Light					= 'LIGH',
+	APIVarId_CornerWindow			= 'CRWD',
+
+} API_ElemVariationID;
+
+
+#define APIDrwIndex_Default			0
+#define APIDrwIndex_Min				1
+#define APIDrwIndex_Max				14
+
+/** @brief The type of an element.
+	@struct API_ElemType
+	@ingroup Element
+	@since Archicad 26
+*/
+struct API_ElemType {
+
+/**	@brief The typeID of the element (see @ref API_ElemTypeID).
+	@var typeID
+*/
+	API_ElemTypeID			typeID;
+
+/**	@brief Subcategory of the element (see @ref API_ElemVariationID).
+	@var variationID
+*/
+	API_ElemVariationID		variationID;
+
+/**	@brief The classID of the element. It is used when the typeID is @ref API_ExternalElemType.
+	@var classID
+*/
+	API_Guid				classID;
+
+	API_ElemType () = default;
+
+	API_ElemType (API_ElemTypeID typeID)
+		: typeID (typeID), variationID (APIVarId_Generic), classID (APINULLGuid)
+	{}
+
+	API_ElemType (API_ElemTypeID typeID, API_ElemVariationID variationID)
+		: typeID (typeID), variationID (variationID), classID (APINULLGuid)
+	{}
+
+	API_ElemType (const API_Guid& classID)
+		: typeID (API_ExternalElemID), variationID (APIVarId_Generic), classID (classID)
+	{}
+
+/**	@brief Assignment operator (by element type).
+*/
+	API_ElemType &operator= (const API_ElemType &) = default;
+
+/**	@brief Assignment operator (by element type).
+	@param newTypeID the new element type
+*/
+	API_ElemType &operator= (API_ElemTypeID newTypeID)
+	{
+		typeID = newTypeID;
+		variationID = APIVarId_Generic;
+		classID = APINULLGuid;
+		return *this;
+	}
+
+/**	@brief Assignment operator (by element class identifier).
+	@param newClassID the new element type (for external elements)
+*/
+	API_ElemType&	operator= (const API_Guid& newClassID)
+	{
+		typeID = API_ExternalElemID;
+		variationID = APIVarId_Generic;
+		classID = newClassID;
+		return *this;
+	}
+
+/**	@brief Comparison operator (by element type).
+    @param other the element type to compare to
+*/
+	bool	operator== (const API_ElemType& other) const
+	{
+		return typeID == other.typeID && variationID == other.variationID && classID == other.classID;
+	}
+
+/**	@brief Comparison operator (by element type).
+    @param other the element type to compare to
+*/
+	bool	operator!= (const API_ElemType& other) const
+	{
+		return !operator== (other);
+	}
+
+/**	@brief Comparison operator (by element type ID).
+    @param otherTypeID the type of the element to compare to
+*/
+	bool	operator== (API_ElemTypeID otherTypeID) const
+	{
+		return typeID == otherTypeID;
+	}
+
+/**	@brief Comparison operator (by element type ID).
+    @param otherTypeID the type of the element to compare to
+*/
+	bool	operator!= (API_ElemTypeID otherTypeID) const
+	{
+		return !operator== (otherTypeID);
+	}
+
+/**	@brief Comparison operator (by class ID; for external elements).
+    @param otherClassID the identifier of the element type to compare to
+ */
+	bool operator== (const API_Guid &otherClassID) const
+	{
+		return classID == otherClassID;
+	}
+
+/**	@brief Comparison operator (by class ID; for external elements).
+    @param otherClassID the identifier of the element type to compare to
+ */
+	bool	operator!= (const API_Guid& otherClassID) const
+	{
+		return !operator== (otherClassID);
+	}
+
+/**	@brief Generates unique identifier
+    @return the unique value
+ */
+	ULong GenerateHashValue (void) const
+	{
+		return GS::CalculateHashValue (typeID, variationID, classID);
+	}
+
+};
+
+/** @brief std::hash specialization for @ref API_ElemType.
+	@struct std::hash<API_ElemType>
+	@ingroup Element
+*/
+template<>
+struct std::hash<API_ElemType> {
+	std::size_t operator() (const API_ElemType& elemType) const
+	{
+		return elemType.GenerateHashValue ();
+	}
+};
+
+//! \{
+
+inline bool operator== (API_ElemTypeID typeID, const API_ElemType& elemType)
+{
+	return elemType == typeID;
+}
+
+inline bool operator != (API_ElemTypeID typeID, const API_ElemType& elemType)
+{
+	return elemType != typeID;
+}
+
+inline bool operator== (const API_Guid& classID, const API_ElemType& elemType)
+{
+	return elemType == classID;
+}
+
+inline bool operator != (const API_Guid& classID, const API_ElemType& elemType)
+{
+	return elemType != classID;
+}
+
+//! \}
+
+
+/** @brief General element header for element types.
+	@struct API_Elem_Head
+	@ingroup Element
+	@since Archicad 26
+	@remarks  From version 12 the element refers to the containing group by the Guid of the group element. The m_groupId field has been eliminated, the top level group can be obtained with the @ref ACAPI_Grouping_GetMainGroupGuid goody function.
+		From version 18 the index -based identification is not available any more; please use GUIDs.
+		From version 26 the typeID and variationID members were merged into an @ref API_ElemType structure.
+*/
+struct API_Elem_Head {
+
+/**	@brief The type of the element.
+	@var type
+*/
+	API_ElemType					type;
+
+	UInt32							filler_0;
+	Int32							filler_1;
+
+/**	@brief The globally unique identifier of the element. It is type-independent, and guaranteed to be globally unique in all projects. (The only possible guid clash is between projects which have evolved from the same base project.) Also, it doesn't change under any circumstances.
+	@var guid
+*/
+	API_Guid						guid;
+
+/**	@brief The modification stamp of the element.
+	@var modiStamp
+*/
+	UInt64							modiStamp;
+
+
+/**	@brief The identifier of the group the element belongs to. APINULLGuid means the element is not grouped. Doesn't apply to certain (non-groupable) element types.
+	@var groupGuid
+*/
+	API_Guid						groupGuid;
+
+/**	@brief The identifier of the hotlink instance the element belongs to (see @ref API_HotlinkType). APINULLGuid means the element is not part of any hotlinks.
+	@var hotlinkGuid
+*/
+	API_Guid						hotlinkGuid;
+
+/**	@brief The element belongs to this floor.
+	@var floorInd
+*/
+	short							floorInd;
+
+/**	@brief The layer attribute index of the element.
+	@var layer
+*/
+	API_AttributeIndex				layer;
+
+
+/**	@brief Tells whether an element has extended information (memo) attached.
+	@var hasMemo
+*/
+	bool							hasMemo;
+
+/**	@brief The index of the element in drawing order. It is important for bring to front/send to back type operations. Elements with higher drwIndex are drawn last.
+	@var drwIndex
+*/
+	char							drwIndex;
+
+/**	@brief The member ID of the owner in TeamWork mode.
+	@var userId
+*/
+	short							userId;
+
+/**	@brief The member ID of the locker in TeamWork mode, bool in normal mode.
+	@var lockId
+*/
+	short							lockId;
+
+/**	@brief Reference group layer (-1: special/locked group).
+	@var rgr_layer
+*/
+	API_AttributeIndex				rgr_layer;
+
+
+/**	@brief Renovation status of the element.
+	@var renovationStatus
+*/
+	API_RenovationStatusType		renovationStatus;
+
+/**	@brief Renovation filter GUID for the element. If set, the element's visibility is determined by the given renovation filter. No special filter set when its value APIUndefinedGuid ; APINULLGuid means that the renovation filter cannot be determined at the time of the query.
+	@var renovationFilterGuid
+*/
+	API_Guid						renovationFilterGuid;
+
+};
+
+
+#define APIFilt_None						0x00000000
+#define APIFilt_IsEditable					0x00000001
+#define APIFilt_OnVisLayer					0x00000002
+#define APIFilt_OnActFloor					0x00000004
+#define APIFilt_In3D						0x00000008
+#define APIFilt_InMyWorkspace				0x00000010
+#define APIFilt_IsIndependent				0x00000020
+#define APIFilt_OnActLayout					0x00000040
+#define APIFilt_InCroppedView				0x00000080
+#define APIFilt_IsOfVariation				0x00000100
+#define APIFilt_HasAccessRight				0x00000200
+#define APIFilt_IsVisibleByRenovation		0x00000400
+#define APIFilt_IsOverridden			 	0x00000800
+#define APIFilt_IsInStructureDisplay	 	0x00001000
+#define APIFilt_FromFloorplan				0x10000000
+
+typedef GSFlags	API_ElemFilterFlags;
+
+#define APISect_Normal				0x0000						// simple cross section element
+#define	APISect_Poly				0x0001						// profiled cross section element
+#define	APISect_Slanted				0x0003						// slanted cross section element
+#define	APISect_Trapez				0x0005						// trapezoid cross section element
+
+#define APIElemMask_FromFloorplan	0x10000000
+
+
+
+/** @brief Identify a part of an element. It's valid for PolyRoof and Morph only.
+	@struct API_ElemPartId
+	@ingroup Element
+*/
+class API_ElemPartId {
+public:
+	UInt32							main;
+	UInt32							sub;
+	Int32							floor;
+
+	API_ElemPartId () : main (0), sub (0), floor (0) {}
+
+	bool	operator==	(const API_ElemPartId& right) const		{ return (main == right.main && sub == right.sub && floor == right.floor); }
+	bool	operator!=	(const API_ElemPartId& right) const		{ return !operator== (right); }
+	ULong	GenerateHashValue () const							{ return (main ^ sub) + floor * 65599; }
+
+};
+
+
+// =============================================================================
+// Common Structures and Definitions
+//
+// =============================================================================
+
+typedef enum {
+	API_HatchGlobal				= 0,
+	API_HatchRotated			= 1,
+	API_HatchDistorted			= 2,
+	API_HatchCentered			= 3
+} API_HatchOrientationTypeID;
+

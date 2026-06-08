@@ -1,0 +1,16 @@
+﻿
+				<Item command="1547-0x00000000-0x00000000" comment="&amp;Zone Categories..."/>
+				<Item command="6150-0x00000000-0x00000000" comment="&amp;Zones..."/>
+				<Item command="21771-0x00000000-0x00000000" comment="Transparent Fills and Zones"/>
+				<Item command="20010-0x00000000-0x00000000" comment="Run Parameter Script on Placed Zo
+nes"/>
+							<Item command="21771-0x00000000-0x00000000" comment="Transparent Fills and Zones"/>
+							<Item command="17173-0x00000000-0x00000000" comment="Zone"/>
+							<Item command="793-0x00000000-0x00000000" comment="Crop &amp;Zone..."/>
+					<Item command="1292-0x00000000-0x00000000" comment="U&amp;pdate Zones..."/>
+									<Item command="9218-0x00000000-0x00000000" comment="No Zone Lists"/>
+				<Item command="1547-0x00000000-0x00000000" comment="&amp;Zone Categories..."/>
+				<Item command="793-0x00000000-0x00000000" comment="Crop &amp;Zone..."/>
+				<Item command="17173-0x00000000-0x00000000" comment="Zone"/>
+
+

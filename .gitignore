@@ -1,0 +1,57 @@
+# Compile outputs
+Build/
+Build_Mac/
+x64/
+Release/
+Debug/
+ipch/
+*.aps
+*.odsp
+*.user
+*.userOSX
+*.suo
+*.sln
+*.vcxproj
+*.filters
+*.metaproj
+*.dir
+*.tlog
+*.recipe
+*.recipe.nosync
+*.log
+*.res
+*.res.stamp
+*.stamp
+*.pdb
+*.iobj
+*.ipdb
+*.lib
+*.exp
+*.apx
+*.bundle
+
+# Local SDKs and dependencies
+sdks/
+*.zip
+*.dmg
+*.msi
+
+# Visual Studio and IDE files
+.vs/
+.idea/
+.vscode/
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+Makefile
+
+# Temporary/Backup files
+Backup_*/
+*.bak
+*_temp*
+*stripped*
+extracted_bodies.txt
+build_*.txt
+*.pyc
+__pycache__/
+.venv/

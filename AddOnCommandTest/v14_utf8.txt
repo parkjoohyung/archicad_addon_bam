@@ -1,0 +1,117 @@
+﻿**********************************************************************
+** Visual Studio 2022 Developer Command Prompt v17.14.27
+** Copyright (c) 2025 Microsoft Corporation
+**********************************************************************
+-- APIDevKit directory: C:/Program Files/GRAPHISOFT/API Development Kit 27.6003
+-- Archicad Version: 27
+-- Selecting Windows SDK version 10.0.26100.0 to target Windows 10.0.26200.
+-- AddGSModuleIncludeFolder C:/Program Files/Graphisoft/API Development Kit 27.6003/Support/Modules/AnalyticalModelAPI
+-- AddGSModuleIncludeFolder C:/Program Files/Graphisoft/API Development Kit 27.6003/Support/Modules/ArchicadAPI
+-- AddGSModuleIncludeFolder C:/Program Files/Graphisoft/API Development Kit 27.6003/Support/Modules/Brep
+-- AddGSModuleIncludeFolder C:/Program Files/Graphisoft/API Development Kit 27.6003/Support/Modules/BuiltInLibrary
+-- AddGSModuleIncludeFolder C:/Program Files/Graphisoft/API Development Kit 27.6003/Support/Modules/CADInfrastructureBase
+-- AddGSModuleIncludeFolder C:/Program Files/Graphisoft/API Development Kit 27.6003/Support/Modules/CommunicationClient
+-- AddGSModuleIncludeFolder C:/Program Files/Graphisoft/API Development Kit 27.6003/Support/Modules/CommunicationCommon
+-- AddGSModuleIncludeFolder C:/Program Files/Graphisoft/API Development Kit 27.6003/Support/Modules/DGGraphix
+-- AddGSModuleIncludeFolder C:/Program Files/Graphisoft/API Development Kit 27.6003/Support/Modules/DGLib
+-- AddGSModuleIncludeFolder C:/Program Files/Graphisoft/API Development Kit 27.6003/Support/Modules/DesignVariantAPI
+-- AddGSModuleIncludeFolder C:/Program Files/Graphisoft/API Development Kit 27.6003/Support/Modules/GDL
+-- AddGSModuleIncludeFolder C:/Program Files/Graphisoft/API Development Kit 27.6003/Support/Modules/GSMSections
+-- AddGSModuleIncludeFolder C:/Program Files/Graphisoft/API Development Kit 27.6003/Support/Modules/GSModelDevLib
+-- AddGSModuleIncludeFolder C:/Program Files/Graphisoft/API Development Kit 27.6003/Support/Modules/GSModeler
+-- AddGSModuleIncludeFolder C:/Program Files/Graphisoft/API Development Kit 27.6003/Support/Modules/GSModeler2D
+-- AddGSModuleIncludeFolder C:/Program Files/Graphisoft/API Development Kit 27.6003/Support/Modules/GSRoot
+-- AddGSModuleIncludeFolder C:/Program Files/Graphisoft/API Development Kit 27.6003/Support/Modules/GSUtils
+-- AddGSModuleIncludeFolder C:/Program Files/Graphisoft/API Development Kit 27.6003/Support/Modules/GSXML
+-- AddGSModuleIncludeFolder C:/Program Files/Graphisoft/API Development Kit 27.6003/Support/Modules/GSXMLUtils
+-- AddGSModuleIncludeFolder C:/Program Files/Graphisoft/API Development Kit 27.6003/Support/Modules/GX
+-- AddGSModuleIncludeFolder C:/Program Files/Graphisoft/API Development Kit 27.6003/Support/Modules/GXImage
+-- AddGSModuleIncludeFolder C:/Program Files/Graphisoft/API Development Kit 27.6003/Support/Modules/GXImageBase
+-- AddGSModuleIncludeFolder C:/Program Files/Graphisoft/API Development Kit 27.6003/Support/Modules/GXMedia
+-- AddGSModuleIncludeFolder C:/Program Files/Graphisoft/API Development Kit 27.6003/Support/Modules/Geometry
+-- AddGSModuleIncludeFolder C:/Program Files/Graphisoft/API Development Kit 27.6003/Support/Modules/Graphix
+-- AddGSModuleIncludeFolder C:/Program Files/Graphisoft/API Development Kit 27.6003/Support/Modules/HTTP
+-- AddGSModuleIncludeFolder C:/Program Files/Graphisoft/API Development Kit 27.6003/Support/Modules/IFCInOutAPI
+-- AddGSModuleIncludeFolder C:/Program Files/Graphisoft/API Development Kit 27.6003/Support/Modules/InputOutput
+-- AddGSModuleIncludeFolder C:/Program Files/Graphisoft/API Development Kit 27.6003/Support/Modules/JSON
+-- AddGSModuleIncludeFolder C:/Program Files/Graphisoft/API Development Kit 27.6003/Support/Modules/JSONConversion
+-- AddGSModuleIncludeFolder C:/Program Files/Graphisoft/API Development Kit 27.6003/Support/Modules/JavascriptEngine
+-- AddGSModuleIncludeFolder C:/Program Files/Graphisoft/API Development Kit 27.6003/Support/Modules/LibXL
+-- AddGSModuleIncludeFolder C:/Program Files/Graphisoft/API Development Kit 27.6003/Support/Modules/MEPAPI
+-- AddGSModuleIncludeFolder C:/Program Files/Graphisoft/API Development Kit 27.6003/Support/Modules/MPIInterfaceDevLib
+-- AddGSModuleIncludeFolder C:/Program Files/Graphisoft/API Development Kit 27.6003/Support/Modules/MPIInterfaceImpDevLib
+-- AddGSModuleIncludeFolder C:/Program Files/Graphisoft/API Development Kit 27.6003/Support/Modules/Model3D
+-- AddGSModuleIncludeFolder C:/Program Files/Graphisoft/API Development Kit 27.6003/Support/Modules/Model3DViewerControl
+-- AddGSModuleIncludeFolder C:/Program Files/Graphisoft/API Development Kit 27.6003/Support/Modules/Network
+-- AddGSModuleIncludeFolder C:/Program Files/Graphisoft/API Development Kit 27.6003/Support/Modules/Pattern
+-- AddGSModuleIncludeFolder C:/Program Files/Graphisoft/API Development Kit 27.6003/Support/Modules/PointCloud
+-- AddGSModuleIncludeFolder C:/Program Files/Graphisoft/API Development Kit 27.6003/Support/Modules/PointCloudManager
+-- AddGSModuleIncludeFolder C:/Program Files/Graphisoft/API Development Kit 27.6003/Support/Modules/QGDrawing
+-- AddGSModuleIncludeFolder C:/Program Files/Graphisoft/API Development Kit 27.6003/Support/Modules/RS
+-- AddGSModuleIncludeFolder C:/Program Files/Graphisoft/API Development Kit 27.6003/Support/Modules/RapidJSON
+-- AddGSModuleIncludeFolder C:/Program Files/Graphisoft/API Development Kit 27.6003/Support/Modules/SecureCommunication
+-- AddGSModuleIncludeFolder C:/Program Files/Graphisoft/API Development Kit 27.6003/Support/Modules/TWClientLib
+-- AddGSModuleIncludeFolder C:/Program Files/Graphisoft/API Development Kit 27.6003/Support/Modules/TWRoot
+-- AddGSModuleIncludeFolder C:/Program Files/Graphisoft/API Development Kit 27.6003/Support/Modules/TextEngine
+-- AddGSModuleIncludeFolder C:/Program Files/Graphisoft/API Development Kit 27.6003/Support/Modules/TransparentWindowLib
+-- AddGSModuleIncludeFolder C:/Program Files/Graphisoft/API Development Kit 27.6003/Support/Modules/UCLib
+-- AddGSModuleIncludeFolder C:/Program Files/Graphisoft/API Development Kit 27.6003/Support/Modules/UDLib
+-- AddGSModuleIncludeFolder C:/Program Files/Graphisoft/API Development Kit 27.6003/Support/Modules/UserInterfaceAPI
+-- AddGSModuleIncludeFolder C:/Program Files/Graphisoft/API Development Kit 27.6003/Support/Modules/VBElemDialogs
+-- AddGSModuleIncludeFolder C:/Program Files/Graphisoft/API Development Kit 27.6003/Support/Modules/VBUtils
+-- AddGSModuleIncludeFolder C:/Program Files/Graphisoft/API Development Kit 27.6003/Support/Modules/VectorImage
+-- AddGSModuleLinkLibrary C:/Program Files/Graphisoft/API Development Kit 27.6003/Support/Modules/AnalyticalModelAPI/Win/AnalyticalModelAPIImp.LIB
+-- AddGSModuleLinkLibrary C:/Program Files/Graphisoft/API Development Kit 27.6003/Support/Modules/ArchicadAPI/Win/ArchicadAPIImp.LIB
+-- AddGSModuleLinkLibrary C:/Program Files/Graphisoft/API Development Kit 27.6003/Support/Modules/Brep/Win/BrepImp.LIB
+-- AddGSModuleLinkLibrary C:/Program Files/Graphisoft/API Development Kit 27.6003/Support/Modules/BuiltInLibrary/Win/BuiltInLibraryImp.LIB
+-- AddGSModuleLinkLibrary C:/Program Files/Graphisoft/API Development Kit 27.6003/Support/Modules/CADInfrastructureBase/Win/CADInfrastructureBaseImp.LIB
+-- AddGSModuleLinkLibrary C:/Program Files/Graphisoft/API Development Kit 27.6003/Support/Modules/CommunicationClient/Win/Communication.ClientImp.LIB
+-- AddGSModuleLinkLibrary C:/Program Files/Graphisoft/API Development Kit 27.6003/Support/Modules/CommunicationCommon/Win/Communication.CommonImp.LIB
+-- AddGSModuleLinkLibrary C:/Program Files/Graphisoft/API Development Kit 27.6003/Support/Modules/DGGraphix/Win/DGGraphixImp.LIB
+-- AddGSModuleLinkLibrary C:/Program Files/Graphisoft/API Development Kit 27.6003/Support/Modules/DGLib/Win/DGImp.LIB
+-- AddGSModuleLinkLibrary C:/Program Files/Graphisoft/API Development Kit 27.6003/Support/Modules/DesignVariantAPI/Win/DesignVariantAPIImp.LIB
+-- AddGSModuleLinkLibrary C:/Program Files/Graphisoft/API Development Kit 27.6003/Support/Modules/GSMSections/Win/GSMSectionsImp.LIB
+-- AddGSModuleLinkLibrary C:/Program Files/Graphisoft/API Development Kit 27.6003/Support/Modules/GSModeler/Win/GSModelerImp.LIB
+-- AddGSModuleLinkLibrary C:/Program Files/Graphisoft/API Development Kit 27.6003/Support/Modules/GSModeler2D/Win/GSModeler2DImp.LIB
+-- AddGSModuleLinkLibrary C:/Program Files/Graphisoft/API Development Kit 27.6003/Support/Modules/GSRoot/Win/GSRootImp.LIB
+-- AddGSModuleLinkLibrary C:/Program Files/Graphisoft/API Development Kit 27.6003/Support/Modules/GSUtils/Win/GSUtilsImp.LIB
+-- AddGSModuleLinkLibrary C:/Program Files/Graphisoft/API Development Kit 27.6003/Support/Modules/GSXML/Win/GSXMLImp.LIB
+-- AddGSModuleLinkLibrary C:/Program Files/Graphisoft/API Development Kit 27.6003/Support/Modules/GSXMLUtils/Win/GSXMLUtilsImp.LIB
+-- AddGSModuleLinkLibrary C:/Program Files/Graphisoft/API Development Kit 27.6003/Support/Modules/GX/Win/GXImp.LIB
+-- AddGSModuleLinkLibrary C:/Program Files/Graphisoft/API Development Kit 27.6003/Support/Modules/GXImage/Win/GXImageImp.LIB
+-- AddGSModuleLinkLibrary C:/Program Files/Graphisoft/API Development Kit 27.6003/Support/Modules/GXImageBase/Win/GXImageBaseImp.LIB
+-- AddGSModuleLinkLibrary C:/Program Files/Graphisoft/API Development Kit 27.6003/Support/Modules/GXMedia/Win/GXMediaImp.LIB
+-- AddGSModuleLinkLibrary C:/Program Files/Graphisoft/API Development Kit 27.6003/Support/Modules/Geometry/Win/GeometryImp.LIB
+-- AddGSModuleLinkLibrary C:/Program Files/Graphisoft/API Development Kit 27.6003/Support/Modules/Graphix/Win/GraphixImp.LIB
+-- AddGSModuleLinkLibrary C:/Program Files/Graphisoft/API Development Kit 27.6003/Support/Modules/HTTP/Win/HTTPImp.LIB
+-- AddGSModuleLinkLibrary C:/Program Files/Graphisoft/API Development Kit 27.6003/Support/Modules/IFCInOutAPI/Win/IFCInOutAPIImp.LIB
+-- AddGSModuleLinkLibrary C:/Program Files/Graphisoft/API Development Kit 27.6003/Support/Modules/InputOutput/Win/InputOutputImp.LIB
+-- AddGSModuleLinkLibrary C:/Program Files/Graphisoft/API Development Kit 27.6003/Support/Modules/JSON/Win/JSONImp.LIB
+-- AddGSModuleLinkLibrary C:/Program Files/Graphisoft/API Development Kit 27.6003/Support/Modules/JSONConversion/Win/JSONConversionImp.LIB
+-- AddGSModuleLinkLibrary C:/Program Files/Graphisoft/API Development Kit 27.6003/Support/Modules/JavascriptEngine/Win/JavascriptEngineImp.LIB
+-- AddGSModuleLinkLibrary C:/Program Files/Graphisoft/API Development Kit 27.6003/Support/Modules/LibXL/Win/LibXL.lib
+-- AddGSModuleLinkLibrary C:/Program Files/Graphisoft/API Development Kit 27.6003/Support/Modules/MEPAPI/Win/MEPAPIImp.LIB
+-- AddGSModuleLinkLibrary C:/Program Files/Graphisoft/API Development Kit 27.6003/Support/Modules/Model3D/Win/Model3DImp.LIB
+-- AddGSModuleLinkLibrary C:/Program Files/Graphisoft/API Development Kit 27.6003/Support/Modules/Model3DViewerControl/Win/Model3DViewerControlImp.LIB
+-- AddGSModuleLinkLibrary C:/Program Files/Graphisoft/API Development Kit 27.6003/Support/Modules/Network/Win/NetworkImp.LIB
+-- AddGSModuleLinkLibrary C:/Program Files/Graphisoft/API Development Kit 27.6003/Support/Modules/Pattern/Win/PatternImp.LIB
+-- AddGSModuleLinkLibrary C:/Program Files/Graphisoft/API Development Kit 27.6003/Support/Modules/RS/Win/RSImp.LIB
+-- AddGSModuleLinkLibrary C:/Program Files/Graphisoft/API Development Kit 27.6003/Support/Modules/SecureCommunication/Win/SecureCommunicationImp.LIB
+-- AddGSModuleLinkLibrary C:/Program Files/Graphisoft/API Development Kit 27.6003/Support/Modules/TextEngine/Win/TextEngineImp.LIB
+-- AddGSModuleLinkLibrary C:/Program Files/Graphisoft/API Development Kit 27.6003/Support/Modules/TransparentWindowLib/Win/TransparentWindowImp.LIB
+-- AddGSModuleLinkLibrary C:/Program Files/Graphisoft/API Development Kit 27.6003/Support/Modules/UCLib/Win/UCImp.LIB
+-- AddGSModuleLinkLibrary C:/Program Files/Graphisoft/API Development Kit 27.6003/Support/Modules/UDLib/Win/UDImp.LIB
+-- AddGSModuleLinkLibrary C:/Program Files/Graphisoft/API Development Kit 27.6003/Support/Modules/UserInterfaceAPI/Win/UserInterfaceAPIImp.LIB
+-- AddGSModuleLinkLibrary C:/Program Files/Graphisoft/API Development Kit 27.6003/Support/Modules/VBElemDialogs/Win/VBElemDialogsImp.LIB
+-- AddGSModuleLinkLibrary C:/Program Files/Graphisoft/API Development Kit 27.6003/Support/Modules/VBUtils/Win/VBUtilsImp.LIB
+-- AddGSModuleLinkLibrary C:/Program Files/Graphisoft/API Development Kit 27.6003/Support/Modules/VectorImage/Win/VectorImageImp.LIB
+-- Configuring done (0.0s)
+-- Generating done (0.1s)
+-- Build files have been written to: D:/park/07_anti/01_archicadmcp/cpp_addon/AddOnCommandTest/Build
+msbuild 踰꾩쟾 17.14.40+3e7442088(.NET Framework??
+
+  AddOn.vcxproj -> D:\park\07_anti\01_archicadmcp\cpp_addon\AddOnCommandTest\Build\Release\AddOnCommandTest.apx
+
+[SUCCESS] Build complete. Copying to Archicad Add-Ons folder...
+        1 file(s) copied.
+[DONE] ZoneHelper.apx copied successfully. Please restart Archicad.
