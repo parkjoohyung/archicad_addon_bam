@@ -49,7 +49,7 @@ jobs:
           rm -rf Build29
           mkdir Build29
           cd Build29
-          cmake .. -G Xcode -DAC_API_DEVKIT_DIR="../../sdks/sdk_29" -DCMAKE_OSX_DEPLOYMENT_TARGET="10.15"
+          cmake .. -G Xcode -DAC_API_DEVKIT_DIR="../../sdks/sdk_29" -DCMAKE_OSX_DEPLOYMENT_TARGET="10.15" -DCMAKE_OSX_ARCHITECTURES="arm64"
           cmake --build . --config Release -- -jobs 4 CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY=""
 
       - name: Upload macOS Bundles

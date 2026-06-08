@@ -223,7 +223,9 @@ file (GLOB GSLinkLibFolders
 	${APIDevKitLinkLibDir}/*
 )
 foreach (linkLibFolder ${GSLinkLibFolders})
-	AddGSModuleLinkLibrary (AddOn ${linkLibFolder})
+	if (NOT "${linkLibFolder}" MATCHES "\\.DS_Store$")
+		AddGSModuleLinkLibrary (AddOn ${linkLibFolder})
+	endif ()
 endforeach ()
 
 
