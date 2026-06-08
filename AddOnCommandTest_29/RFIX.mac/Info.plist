@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>English</string>
 	<key>CFBundleExecutable</key>
-	<string>AddOn</string>
+	<string>ac_bam_AC29_v1.0.1</string>
 	<key>CFBundleIdentifier</key>
 	<string>com.parkjoohyung.acbam</string>
 	<key>CFBundleInfoDictionaryVersion</key>
