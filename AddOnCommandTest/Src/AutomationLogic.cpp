@@ -1433,6 +1433,7 @@ namespace AddOnLogic {
                 }
             }
 
+            if (polylines.size() < 2) {
                 ShowAlert(GS::UniString ("Please select at least 2 contour lines."), true);
                 return;
             }
