@@ -84,6 +84,8 @@ add_definitions (-DACExtension -DARCHICAD_VERSION_${ARCHICAD_VERSION})
 
 project (${AC_ADDON_NAME})
 
+set (AC_OUTPUT_NAME "ac_bam_AC${ARCHICAD_VERSION}_v1.0.1")
+
 set (AddOnSourcesFolder ./Src)
 set (AddOnResourcesFolder .)
 
@@ -135,8 +137,8 @@ else ()
 		DEPENDS ${AddOnResourceFiles} ${AddOnImageFiles}
 		COMMENT "Compiling resources..."
 		COMMAND ${CMAKE_COMMAND} -E make_directory "${ResourceObjectsDir}"
-		COMMAND "python3" "${APIDevKitToolsFolderAbsolute}/CompileResources.py" "${AC_ADDON_LANGUAGE}" "${AC_API_DEVKIT_DIR}" "${AddOnSourcesFolderAbsolute}" "${AddOnResourcesFolderAbsolute}" "${ResourceObjectsDir}" "${CMAKE_BINARY_DIR}/$<CONFIG>/${AC_ADDON_NAME}.bundle/Contents/Resources"
-		COMMAND ${CMAKE_COMMAND} -E copy "${AC_API_DEVKIT_DIR}/Support/Inc/PkgInfo" "${CMAKE_BINARY_DIR}/$<CONFIG>/${AC_ADDON_NAME}.bundle/Contents/PkgInfo"
+		COMMAND "python3" "${APIDevKitToolsFolderAbsolute}/CompileResources.py" "${AC_ADDON_LANGUAGE}" "${AC_API_DEVKIT_DIR}" "${AddOnSourcesFolderAbsolute}" "${AddOnResourcesFolderAbsolute}" "${ResourceObjectsDir}" "${CMAKE_BINARY_DIR}/$<CONFIG>/${AC_OUTPUT_NAME}.bundle/Contents/Resources"
+		COMMAND ${CMAKE_COMMAND} -E copy "${AC_API_DEVKIT_DIR}/Support/Inc/PkgInfo" "${CMAKE_BINARY_DIR}/$<CONFIG>/${AC_OUTPUT_NAME}.bundle/Contents/PkgInfo"
 		COMMAND ${CMAKE_COMMAND} -E touch "${ResourceObjectsDir}/AddOnResources.stamp"
 	)
 endif ()
@@ -170,7 +172,7 @@ else ()
 	add_library (AddOn MODULE ${AddOnFiles})
 endif ()
 
-set_target_properties (AddOn PROPERTIES OUTPUT_NAME "ac_bam_AC${ARCHICAD_VERSION}_v1.0.1")
+set_target_properties (AddOn PROPERTIES OUTPUT_NAME "${AC_OUTPUT_NAME}")
 if (WIN32)
 	set_target_properties (AddOn PROPERTIES SUFFIX ".apx")
 else ()
