@@ -2,14 +2,59 @@
 #include <string>
 #include <sstream>
 #include <algorithm>
-#ifdef WINDOWS
+#include <fstream>
+#include <cstdlib>
+
+#if defined(WINDOWS) || defined(_WIN32)
 #include <windows.h>
 #include <wininet.h>
 #pragma comment(lib, "wininet.lib")
 #pragma comment(lib, "advapi32.lib")
+#else
+#include <stdio.h>
 #endif
 
 namespace MyProjectNamespace {
+
+#if !defined(WINDOWS) && !defined(_WIN32)
+static std::string GetMacLicenseFilePath() {
+    const char* home = getenv("HOME");
+    if (!home) return "";
+    std::string dir = std::string(home) + "/Library/Application Support/ac_bam";
+    std::string cmd = "mkdir -p \"" + dir + "\"";
+    std::system(cmd.c_str());
+    return dir + "/license.txt";
+}
+#endif
+
+static std::string FetchUrl(const std::string& url) {
+#if defined(WINDOWS) || defined(_WIN32)
+    std::string content;
+    HINTERNET hInternet = InternetOpenA("ArchiCAD-Addon", INTERNET_OPEN_TYPE_DIRECT, NULL, NULL, 0);
+    if (!hInternet) return "";
+    HINTERNET hUrl = InternetOpenUrlA(hInternet, url.c_str(), NULL, 0, INTERNET_FLAG_RELOAD, 0);
+    if (!hUrl) { InternetCloseHandle(hInternet); return ""; }
+    char buffer[4096]; DWORD read;
+    while (InternetReadFile(hUrl, buffer, sizeof(buffer)-1, &read) && read > 0) {
+        buffer[read] = '\0';
+        content += buffer;
+    }
+    InternetCloseHandle(hUrl);
+    InternetCloseHandle(hInternet);
+    return content;
+#else
+    std::string result;
+    std::string cmd = "curl -s -f -L \"" + url + "\"";
+    FILE* pipe = popen(cmd.c_str(), "r");
+    if (!pipe) return "";
+    char buffer[512];
+    while (fgets(buffer, sizeof(buffer), pipe) != NULL) {
+        result += buffer;
+    }
+    pclose(pipe);
+    return result;
+#endif
+}
 
 GS::UniString ComputeLicenseHash(const GS::UniString& email, const GS::UniString& key) {
     std::string combined = email.ToCStr().Get();
@@ -26,23 +71,9 @@ GS::UniString ComputeLicenseHash(const GS::UniString& email, const GS::UniString
 }
 
 bool CheckLicenseOnline(const GS::UniString& email, const GS::UniString& key) {
-#if defined(WINDOWS) || defined(_WIN32)
-    HINTERNET hInternet = InternetOpenA("ArchiCAD-Addon", INTERNET_OPEN_TYPE_DIRECT, NULL, NULL, 0);
-    if (!hInternet) return false;
-
     const char* url = "https://raw.githubusercontent.com/parkjoohyung/archicad_addon_bam/main/licenses.txt";
-    HINTERNET hUrl = InternetOpenUrlA(hInternet, url, NULL, 0, INTERNET_FLAG_RELOAD, 0);
-    if (!hUrl) { InternetCloseHandle(hInternet); return false; }
-
-    char buffer[4096]; DWORD read;
-    std::string content;
-    while (InternetReadFile(hUrl, buffer, sizeof(buffer)-1, &read) && read > 0) {
-        buffer[read] = '\0';
-        content += buffer;
-    }
-
-    InternetCloseHandle(hUrl);
-    InternetCloseHandle(hInternet);
+    std::string content = FetchUrl(url);
+    if (content.empty()) return false;
 
     GS::UniString myHash = ComputeLicenseHash(email, key);
     std::stringstream ss(content);
@@ -53,10 +84,6 @@ bool CheckLicenseOnline(const GS::UniString& email, const GS::UniString& key) {
         if (myHash == GS::UniString(line.c_str())) return true;
     }
     return false;
-#else
-    // Temporary bypass for macOS build
-    return true;
-#endif
 }
 
 bool SaveLicenseLocal(const GS::UniString& email, const GS::UniString& key) {
@@ -72,6 +99,11 @@ bool SaveLicenseLocal(const GS::UniString& email, const GS::UniString& key) {
     }
     return false;
 #else
+    std::string filePath = GetMacLicenseFilePath();
+    if (filePath.empty()) return false;
+    std::ofstream ofs(filePath);
+    if (!ofs.is_open()) return false;
+    ofs << email.ToCStr().Get() << "\n" << key.ToCStr().Get() << "\n";
     return true;
 #endif
 }
@@ -91,7 +123,15 @@ bool IsAlreadyLicensed() {
     }
     return false;
 #else
-    return true;
+    std::string filePath = GetMacLicenseFilePath();
+    if (filePath.empty()) return false;
+    std::ifstream ifs(filePath);
+    if (!ifs.is_open()) return false;
+    std::string email, key;
+    if (std::getline(ifs, email) && std::getline(ifs, key)) {
+        return CheckLicenseOnline(GS::UniString(email.c_str()), GS::UniString(key.c_str()));
+    }
+    return false;
 #endif
 }
 
