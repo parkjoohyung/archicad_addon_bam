@@ -22,27 +22,27 @@ jobs:
         run: |
           mkdir -p sdks
           
-          echo "Downloading ArchiCAD 27 Mac SDK..."
-          curl -L -o sdks/sdk_27.zip "https://github.com/GRAPHISOFT/archicad-api-devkit/releases/download/27.6003/API.Development.Kit.MAC.27.6003.zip"
-          unzip -q sdks/sdk_27.zip -d sdks/sdk_27
+          echo "Downloading ArchiCAD 28 Mac SDK..."
+          curl -L -o sdks/sdk_28.zip "https://github.com/GRAPHISOFT/archicad-api-devkit/releases/download/28.4001/API.Development.Kit.MAC.28.4001.zip"
+          unzip -q sdks/sdk_28.zip -d sdks/sdk_28
           
           echo "Downloading ArchiCAD 29 Mac SDK..."
           curl -L -o sdks/sdk_29.zip "https://github.com/GRAPHISOFT/archicad-api-devkit/releases/download/29.3100/API.Development.Kit.MAC.29.3100.zip"
           unzip -q sdks/sdk_29.zip -d sdks/sdk_29
 
-      - name: Build ArchiCAD 27 (macOS)
+      - name: Build ArchiCAD 28 (macOS)
         run: |
           cd AddOnCommandTest
-          mkdir Build
-          cd Build
-          cmake .. -G Xcode -DAC_API_DEVKIT_DIR="../../sdks/sdk_27"
+          mkdir Build28
+          cd Build28
+          cmake .. -G Xcode -DAC_API_DEVKIT_DIR="../../sdks/sdk_28"
           cmake --build . --config Release
 
       - name: Build ArchiCAD 29 (macOS)
         run: |
           cd AddOnCommandTest_29
-          mkdir Build
-          cd Build
+          mkdir Build29
+          cd Build29
           cmake .. -G Xcode -DAC_API_DEVKIT_DIR="../../sdks/sdk_29"
           cmake --build . --config Release
 
@@ -51,7 +51,7 @@ jobs:
         with:
           name: macos-binaries
           path: |
-            AddOnCommandTest/Build/Release/*.bundle
-            AddOnCommandTest_29/Build/Release/*.bundle
+            AddOnCommandTest/Build28/Release/*.bundle
+            AddOnCommandTest_29/Build29/Release/*.bundle
 
 
