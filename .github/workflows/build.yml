@@ -23,11 +23,11 @@ jobs:
           mkdir -p sdks
           
           echo "Downloading ArchiCAD 27 Mac SDK..."
-          curl -L -o sdks/sdk_27.zip "https://github.com/parkjoohyung/archicad_addon_bam/releases/download/sdks/API_Development_Kit_27_Mac.zip"
+          curl -L -o sdks/sdk_27.zip "https://github.com/GRAPHISOFT/archicad-api-devkit/releases/download/27.6003/API.Development.Kit.MAC.27.6003.zip"
           unzip -q sdks/sdk_27.zip -d sdks/sdk_27
           
           echo "Downloading ArchiCAD 29 Mac SDK..."
-          curl -L -o sdks/sdk_29.zip "https://github.com/parkjoohyung/archicad_addon_bam/releases/download/sdks/API_Development_Kit_29_Mac.zip"
+          curl -L -o sdks/sdk_29.zip "https://github.com/GRAPHISOFT/archicad-api-devkit/releases/download/29.3100/API.Development.Kit.MAC.29.3100.zip"
           unzip -q sdks/sdk_29.zip -d sdks/sdk_29
 
       - name: Build ArchiCAD 27 (macOS)
