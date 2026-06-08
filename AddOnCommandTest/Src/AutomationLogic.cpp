@@ -18,6 +18,14 @@ using PolyIdx = UInt32;
 
 namespace AddOnLogic {
 
+    static void ShowAlert (const GS::UniString& msg, bool isWarning = false) {
+#if defined(WINDOWS) || defined(_WIN32)
+        ::MessageBoxW(nullptr, (const WCHAR*)msg.ToUStr().Get(), L"Terrain", (isWarning ? MB_ICONWARNING : MB_ICONINFORMATION) | MB_OK | MB_TOPMOST);
+#else
+        ACAPI_WriteReport(msg, true);
+#endif
+    }
+
     // --- Polyline Simplification ---
     void SimplifyPolyline(double tolMM, bool preserveCurve) {
         API_SelectionInfo si; GS::Array<API_Neig> sel;
@@ -620,9 +628,7 @@ namespace AddOnLogic {
                     if (el.header.type == API_TextID || el.header.type == API_LabelID) {
                         API_ElementMemo memo = {};
                         if (ACAPI_Element_GetMemo(el.header.guid, &memo, APIMemoMask_TextContent | APIMemoMask_Paragraph) == NoError) {
-                            bool multiStyle = false;
-                            if (el.header.type == API_TextID) multiStyle = el.text.multiStyle;
-                            else multiStyle = el.label.u.text.multiStyle;
+
 
 #if defined(ARCHICAD_VERSION_28) || defined(ARCHICAD_VERSION_29)
                             if (memo.textContent != nullptr) delete memo.textContent;
@@ -839,7 +845,8 @@ namespace AddOnLogic {
                     if (!stName.empty() && stName.back() == '\r') stName.pop_back();
                     
                     GS::UniString uniName(stName.c_str(), CC_UTF8);
-                    const GS::uchar_t* src = uniName.ToUStr();
+                    auto ustrBuf = uniName.ToUStr();
+                    const GS::uchar_t* src = (const GS::uchar_t*)ustrBuf.Get();
                     size_t len = GS::ucslen(src);
                     if (len > 31) len = 31;
                     memcpy(zoneElem.zone.roomName, src, len * sizeof(GS::uchar_t));
@@ -1394,7 +1401,7 @@ namespace AddOnLogic {
             });
             
             GS::UniString msg = GS::UniString::Printf("Successfully generated %d contour polylines from Mesh.", createdContours);
-            ::MessageBoxW(nullptr, (const WCHAR*)msg.ToUStr().Get(), L"Terrain", MB_OK | MB_ICONINFORMATION | MB_TOPMOST);
+            ShowAlert(msg);
         } else {
             // InterpolateContours
             struct PolylineData { API_Guid guid; std::vector<API_Coord> coords; };
@@ -1426,8 +1433,7 @@ namespace AddOnLogic {
                 }
             }
 
-            if (polylines.size() < 2) {
-                ::MessageBoxW(nullptr, L"Please select at least 2 contour lines.", L"Terrain", MB_OK | MB_ICONWARNING | MB_TOPMOST);
+                ShowAlert(GS::UniString ("Please select at least 2 contour lines."), true);
                 return;
             }
 
@@ -1632,7 +1638,7 @@ namespace AddOnLogic {
             });
 
             GS::UniString msg = GS::UniString::Printf("Successfully created %d intermediate contour polylines.", createdCount);
-            ::MessageBoxW(nullptr, (const WCHAR*)msg.ToUStr().Get(), L"Terrain", MB_OK | MB_ICONINFORMATION | MB_TOPMOST);
+            ShowAlert(msg);
         }
     }
 

@@ -286,7 +286,7 @@ namespace MyProjectNamespace {
                     if (ACAPI_Element_Get(&el) == NoError) {
                         if (el.header.type.typeID == API_TextID || el.header.type.typeID == API_LabelID) {
                             API_ElementMemo memo; BNZeroMemory(&memo, sizeof(memo));
-#ifdef ServerMainVers_2900
+#if defined(ARCHICAD_VERSION_28) || defined(ARCHICAD_VERSION_29)
                             if (ACAPI_Element_GetMemo(el.header.guid, &memo, APIMemoMask_TextContent) == NoError && memo.textContent != nullptr) {
                                 editPrefix->SetText(*memo.textContent);
                                 ACAPI_DisposeElemMemoHdls(&memo);
