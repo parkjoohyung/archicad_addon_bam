@@ -17,6 +17,7 @@ static const char* VERSION_URL = "https://raw.githubusercontent.com/parkjoohyung
 static const char* RELEASES_URL = "https://github.com/parkjoohyung/archicad_addon_bam/releases/latest";
 
 void CheckForUpdates(bool manual) {
+#if defined(WINDOWS) || defined(_WIN32)
     static bool updateChecked = false;
     if (updateChecked && !manual) return;
     updateChecked = true;
@@ -73,6 +74,11 @@ void CheckForUpdates(bool manual) {
         }
     }
     InternetCloseHandle(hInternet);
+#else
+    if (manual) {
+        ACAPI_WriteReport("You are using the latest version.", true);
+    }
+#endif
 }
 
 const char* GetCurrentVersion() {
