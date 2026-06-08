@@ -23,11 +23,11 @@ jobs:
           mkdir -p sdks
           
           echo "Downloading ArchiCAD 28 Mac SDK..."
-          curl -L -o sdks/sdk_28.zip "https://github.com/GRAPHISOFT/archicad-api-devkit/releases/download/28.4001/API.Development.Kit.MAC.28.4001.zip"
+          curl --retry 5 --retry-delay 5 -L -o sdks/sdk_28.zip "https://github.com/GRAPHISOFT/archicad-api-devkit/releases/download/28.4001/API.Development.Kit.MAC.28.4001.zip"
           unzip -q sdks/sdk_28.zip -d sdks/sdk_28
           
           echo "Downloading ArchiCAD 29 Mac SDK..."
-          curl -L -o sdks/sdk_29.zip "https://github.com/GRAPHISOFT/archicad-api-devkit/releases/download/29.3000/API.Development.Kit.MAC.29.3000.zip"
+          curl --retry 5 --retry-delay 5 -L -o sdks/sdk_29.zip "https://github.com/GRAPHISOFT/archicad-api-devkit/releases/download/29.3000/API.Development.Kit.MAC.29.3000.zip"
           unzip -q sdks/sdk_29.zip -d sdks/sdk_29
 
           echo "Making OSX tools executable..."
