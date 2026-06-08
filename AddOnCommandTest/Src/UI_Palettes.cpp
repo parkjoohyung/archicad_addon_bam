@@ -45,14 +45,7 @@ namespace MyProjectNamespace {
             GS::UniString key = editKey->GetText();
 
             if (CheckLicenseOnline(email, key)) {
-#ifdef WINDOWS
-                HKEY hKey;
-                if (RegCreateKeyExA(HKEY_CURRENT_USER, "Software\\ArchiCAD_Premium_Addon", 0, NULL, 0, KEY_WRITE, NULL, &hKey, NULL) == ERROR_SUCCESS) {
-                    RegSetValueExA(hKey, "Email", 0, REG_SZ, (const BYTE*)email.ToCStr().Get(), (DWORD)strlen(email.ToCStr().Get())+1);
-                    RegSetValueExA(hKey, "Key", 0, REG_SZ, (const BYTE*)key.ToCStr().Get(), (DWORD)strlen(key.ToCStr().Get())+1);
-                    RegCloseKey(hKey);
-                }
-#endif
+                SaveLicenseLocal(email, key);
                 PostCloseRequest(DG::ModalDialog::Accept);
             } else {
                 txtStatus->SetText("Activation failed. Invalid email or key.");
